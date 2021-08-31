@@ -8,6 +8,7 @@ use App\Models\InsuranceCard;
 use App\Models\User;
 use App\Models\Customer;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterForm extends Component
 {
@@ -50,8 +51,9 @@ class RegisterForm extends Component
         $card->insurance_number = $this->card;
         $card->save();
 
-        return \redirect('/');
-
+        if (Auth::attempt(['email' => $this->email, 'password' => $this->password])) {
+            return redirect('/dashboard');
+        }
     }
 
     public function mount(){
