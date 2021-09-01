@@ -52,7 +52,7 @@ class RegisterForm extends Component
         $card->save();
 
         if (Auth::attempt(['email' => $this->email, 'password' => $this->password])) {
-            return redirect('/dashboard');
+            return redirect('/dashboard/customer/home');
         }
     }
 

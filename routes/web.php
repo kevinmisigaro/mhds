@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Dashboards\CustomerDashboardController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,9 +28,14 @@ Route::get('/terms', function(){
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', function(){
-        return view('dashboard.home');
-    });
 
+    Route::prefix('dashboard/customer')->group(function () {
+        Route::get('home', [CustomerDashboardController::class,'index']);
+        Route::get('cards', [CustomerDashboardController::class,'displayCards']);
+        Route::get('card/{cardId}',[CustomerDashboardController::class,'displayCard']);
+        Route::get('complaints',[CustomerDashboardController::class,'displayComplaints']);
+        Route::get('new-complaint',[CustomerDashboardController::class,'newComplaint']);
+    });
+    
     Route::get('logout', [AuthController::class, 'logout']);
 });

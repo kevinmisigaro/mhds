@@ -17,7 +17,7 @@
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-
+     @livewireStyles
     <!-- Custom styles for this template-->
     <link href="{{ asset('dashboard-assets/css/sb-admin-2.min.css') }}" rel="stylesheet">
 
@@ -86,11 +86,12 @@
                 </div>
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
-                    <a class="btn btn-primary" href="logout">Logout</a>
+                    <a class="btn btn-primary" href="/logout">Logout</a>
                 </div>
             </div>
         </div>
     </div>
+    @livewireScripts
 
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('dashboard-assets/vendor/jquery/jquery.min.js') }}"></script>
@@ -104,6 +105,13 @@
 
     <!-- Page level plugins -->
     <script src="{{ asset('dashboard-assets/vendor/chart.js/Chart.min.js') }}"></script>
+
+    <!-- Page level plugins -->
+    <script src="{{ asset('dashboard-assets/vendor/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('dashboard-assets/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="{{ asset('dashboard-assets/js/demo/datatables-demo.js') }}"></script>
 
 </body>
 

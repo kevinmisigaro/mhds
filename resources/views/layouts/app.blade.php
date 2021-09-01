@@ -55,7 +55,7 @@
               </li>
             </ul>
             @if (\Illuminate\Support\Facades\Auth::check())
-            <a href="/dashboard" type="button" class="btn btn-register-nav-alt">
+            <a href="/dashboard/customer/home" type="button" class="btn btn-register-nav-alt">
                Dashboard
             </a>
             @else
