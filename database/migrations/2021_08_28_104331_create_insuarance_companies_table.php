@@ -17,6 +17,8 @@ class CreateInsuaranceCompaniesTable extends Migration
             $table->id();
             $table->string('company_name');
             $table->boolean('active')->default(true);
+            $table->unsignedBigInteger('manager_id');
+            $table->foreign('manager_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

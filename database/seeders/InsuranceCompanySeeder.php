@@ -16,12 +16,15 @@ class InsuranceCompanySeeder extends Seeder
     {
         DB::table('insurance_companies')->insert([
             'company_name' => 'Jubilee',
+            'manager_id' => 3
         ]);
         DB::table('insurance_companies')->insert([
             'company_name' => 'Alliance',
+            'manager_id' => 3
         ]);
         DB::table('insurance_companies')->insert([
             'company_name' => 'NHIF',
+            'manager_id' => 3
         ]);
     }
 }
