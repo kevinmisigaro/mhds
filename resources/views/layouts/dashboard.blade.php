@@ -86,7 +86,7 @@
                 </div>
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
-                    <a class="btn btn-primary" href="/logout">Logout</a>
+                    <a class="btn btn-primary text-white" href="/logout">Logout</a>
                 </div>
             </div>
         </div>

@@ -53,4 +53,16 @@ class User extends Authenticatable
     public function complaint(){
         return $this->hasMany(Complaint::class);
     }
+
+    public function prescription(){
+        return $this->hasMany(Prescription::class);
+    }
+
+    public function managerPrescriptionApproved(){
+        return $this->hasMany(Prescription::class);
+    }
+
+    public function insurerPrescriptionApproved(){
+        return $this->hasMany(Prescription::class);
+    }
 }

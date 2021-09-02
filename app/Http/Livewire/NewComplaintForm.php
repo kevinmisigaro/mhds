@@ -33,6 +33,8 @@ class NewComplaintForm extends Component
         $convo->message = $this->description;
         $convo->save();
 
+        session()->flash('message', 'Complaint successfully saved.');
+
         return redirect('/dashboard/customer/complaints');
     }
 

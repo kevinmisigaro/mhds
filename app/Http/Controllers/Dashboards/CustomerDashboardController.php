@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\InsuranceCard;
 use App\Models\Customer;
 use App\Models\Complaint;
+use App\Models\Prescription;
 use Illuminate\Support\Facades\Auth;
 
 class CustomerDashboardController extends Controller
@@ -16,6 +17,7 @@ class CustomerDashboardController extends Controller
 
         $cards = InsuranceCard::where('owner_id', Auth::user()->id)->get();
         $customer = Customer::where('user_id', Auth::user()->id)->first();
+        $prescriptions = Prescription::where('patient_id', Auth::user()->id)->get();
 
         if($customer->profile_image != null){
             $count++;
@@ -31,7 +33,7 @@ class CustomerDashboardController extends Controller
         
         $profileCount = $count/3;
 
-        return view('dashboard.home',\compact('cards','profileCount'));
+        return view('dashboard.home',\compact('cards','profileCount','prescriptions'));
     }
 
     public function displayCards(){
@@ -42,6 +44,11 @@ class CustomerDashboardController extends Controller
     public function displayCard($cardId){
         $card = InsuranceCard::where('id', $cardId)->with('company')->first();
         return view('dashboard.card', \compact('card'));
+    }
+
+    public function displayPrescriptions(){
+        $prescriptions = Prescription::where('patient_id', Auth::user()->id)->get();
+        return \view('dashboard.prescriptions', \compact('prescriptions'));
     }
 
     public function newComplaint(){

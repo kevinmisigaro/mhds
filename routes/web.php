@@ -35,6 +35,10 @@ Route::middleware('auth')->group(function () {
         Route::get('card/{cardId}',[CustomerDashboardController::class,'displayCard']);
         Route::get('complaints',[CustomerDashboardController::class,'displayComplaints']);
         Route::get('new-complaint',[CustomerDashboardController::class,'newComplaint']);
+        Route::get('prescriptions',[CustomerDashboardController::class,'displayPrescriptions']);
+        Route::get('new-prescription', function(){
+            return view('dashboard.new-prescription');
+        });
     });
     
     Route::get('logout', [AuthController::class, 'logout']);

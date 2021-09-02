@@ -24,7 +24,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="/dashboard/customer/complaints">
+        <a class="nav-link" href="/dashboard/customer/prescriptions">
           <i class="far fa-fw fa-list-alt"></i>
           <span>Prescriptions</span></a>
       </li>
