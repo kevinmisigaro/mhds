@@ -38,21 +38,21 @@ class CustomerDashboardController extends Controller
 
     public function displayCards(){
         $cards = InsuranceCard::where('owner_id', Auth::user()->id)->get();
-        return view('dashboard.cards', \compact('cards'));
+        return view('dashboard.customer.cards', \compact('cards'));
     }
 
     public function displayCard($cardId){
         $card = InsuranceCard::where('id', $cardId)->with('company')->first();
-        return view('dashboard.card', \compact('card'));
+        return view('dashboard.customer.card', \compact('card'));
     }
 
     public function displayPrescriptions(){
         $prescriptions = Prescription::where('patient_id', Auth::user()->id)->get();
-        return \view('dashboard.prescriptions', \compact('prescriptions'));
+        return \view('dashboard.customer.prescriptions', \compact('prescriptions'));
     }
 
     public function newComplaint(){
-        return view('dashboard.new-complaint');
+        return view('dashboard.customer.new-complaint');
     }
 
     public function displayComplaints(){
@@ -64,6 +64,6 @@ class CustomerDashboardController extends Controller
             $complaints = [];
         }
 
-        return view('dashboard.complaints', \compact('complaints'));
+        return view('dashboard.customer.complaints', \compact('complaints'));
     }
 }

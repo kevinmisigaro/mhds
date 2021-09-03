@@ -20,8 +20,13 @@ class LoginForm extends Component
         $this->validate();
 
         if (Auth::attempt(['email' => $this->email, 'password' => $this->password])) {
+            if (Auth::user()->role == 'customer') {
+                return redirect('/dashboard/customer/home');
+            }
 
-            return redirect('/dashboard/customer/home');
+            if(Auth::user()->role == 'admin'){
+                return redirect('/dashboard/admin/home');
+            }
         }
 
         session()->flash('message', 'Incorrect email or password.');

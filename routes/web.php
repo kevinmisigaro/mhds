@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Dashboards\CustomerDashboardController;
+use App\Http\Controllers\Dashboards\AdminDashboardController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -37,8 +38,13 @@ Route::middleware('auth')->group(function () {
         Route::get('new-complaint',[CustomerDashboardController::class,'newComplaint']);
         Route::get('prescriptions',[CustomerDashboardController::class,'displayPrescriptions']);
         Route::get('new-prescription', function(){
-            return view('dashboard.new-prescription');
+            return view('dashboard.customer.new-prescription');
         });
+    });
+
+    Route::prefix('dashboard/admin')->group(function(){
+        Route::get('home',[AdminDashboardController::class,'index']);
+        Route::get('customers',[AdminDashboardController::class,'getCustomers']);
     });
     
     Route::get('logout', [AuthController::class, 'logout']);
