@@ -65,4 +65,8 @@ class User extends Authenticatable
     public function insurerPrescriptionApproved(){
         return $this->hasMany(Prescription::class);
     }
+
+    public function insuranceCompanyManaged(){
+        return $this->hasMany(InsuranceCompany::class);
+    }
 }

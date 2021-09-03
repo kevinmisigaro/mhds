@@ -18,6 +18,8 @@ class CreatePrescriptionsTable extends Migration
             $table->unsignedBigInteger('patient_id');
             $table->foreign('patient_id')->references('id')->on('users');
             $table->string('image');
+            $table->unsignedBigInteger('card_id');
+            $table->foreign('card_id')->references('id')->on('insurance_cards');
             $table->boolean('approved_by_manager')->default(false);
             $table->boolean('approved_by_insurer')->default(false);
             $table->unsignedBigInteger('manager_id')->nullable();

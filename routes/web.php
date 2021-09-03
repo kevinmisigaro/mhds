@@ -34,6 +34,7 @@ Route::middleware('auth')->group(function () {
         Route::get('home', [CustomerDashboardController::class,'index']);
         Route::get('cards', [CustomerDashboardController::class,'displayCards']);
         Route::get('card/{cardId}',[CustomerDashboardController::class,'displayCard']);
+        Route::get('new-card',[CustomerDashboardController::class,'newCard']);
         Route::get('complaints',[CustomerDashboardController::class,'displayComplaints']);
         Route::get('new-complaint',[CustomerDashboardController::class,'newComplaint']);
         Route::get('prescriptions',[CustomerDashboardController::class,'displayPrescriptions']);
@@ -45,6 +46,10 @@ Route::middleware('auth')->group(function () {
     Route::prefix('dashboard/admin')->group(function(){
         Route::get('home',[AdminDashboardController::class,'index']);
         Route::get('customers',[AdminDashboardController::class,'getCustomers']);
+        Route::get('insurers',[AdminDashboardController::class,'getInsurers']);
+        Route::get('doctors',[AdminDashboardController::class,'getDoctors']);
+        Route::get('companies',[AdminDashboardController::class,'displayInsuranceCompanies']);
+        Route::get('complaints',[AdminDashboardController::class,'displayComplaints']);
     });
     
     Route::get('logout', [AuthController::class, 'logout']);

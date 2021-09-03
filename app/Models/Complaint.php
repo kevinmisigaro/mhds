@@ -9,7 +9,7 @@ class Complaint extends Model
 {
     use HasFactory;
 
-    public function complainer(){
+    public function complainerDetails(){
         return $this->belongsTo(User::class,'complainer','id');
     }
 }

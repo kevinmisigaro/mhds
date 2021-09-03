@@ -2,7 +2,6 @@
 @slot('title')
 Card details
 @endslot
-
 <div>
     <div class="row">
         <div class="col-md-6">

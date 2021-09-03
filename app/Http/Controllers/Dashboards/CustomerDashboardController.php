@@ -37,7 +37,7 @@ class CustomerDashboardController extends Controller
     }
 
     public function displayCards(){
-        $cards = InsuranceCard::where('owner_id', Auth::user()->id)->get();
+        $cards = InsuranceCard::where('owner_id', Auth::user()->id)->with('company')->get();
         return view('dashboard.customer.cards', \compact('cards'));
     }
 
@@ -53,6 +53,10 @@ class CustomerDashboardController extends Controller
 
     public function newComplaint(){
         return view('dashboard.customer.new-complaint');
+    }
+
+    public function newCard(){
+        return view('dashboard.customer.new-card');
     }
 
     public function displayComplaints(){

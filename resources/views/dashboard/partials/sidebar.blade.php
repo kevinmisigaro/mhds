@@ -70,11 +70,25 @@
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="/dashboard/admin/customers">Customers</a>
-                <a class="collapse-item" href="#">Insurers</a>
-                <a class="collapse-item" href="#">Doctors</a>
+                <a class="collapse-item" href="/dashboard/admin/insurers">Insurers</a>
+                <a class="collapse-item" href="/dashboard/admin/doctors">Doctors</a>
             </div>
         </div>
     </li>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInsurance" aria-expanded="true"
+          aria-controls="collapsePages">
+          <i class="fas fa-fw fa-folder"></i>
+          <span>Insurance</span>
+      </a>
+      <div id="collapseInsurance" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+              <a class="collapse-item" href="/dashboard/admin/companies">Insurance Companies</a>
+              <a class="collapse-item" href="#">Insurance Cards</a>
+          </div>
+      </div>
+  </li>
 
     <li class="nav-item">
         <a class="nav-link" href="#">
@@ -83,7 +97,7 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="/dashboard/admin/complaints">
             <i class="far fa-fw fa-comment"></i>
             <span>Complaints</span></a>
     </li>

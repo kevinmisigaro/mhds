@@ -14,4 +14,8 @@ class InsuranceCompany extends Model
     public function cards(){
         return $this->hasMany(InsuranceCard::class);
     }
+
+    public function manager(){
+        return $this->belongsTo(User::class,'manager_id','id');
+    }
 }
