@@ -22,8 +22,9 @@
 
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <label>Choose Insurance type</label>
+                        <label>Choose Insurance Company</label>
                         <select wire:model="company" class="form-control">
+                            <option>Select company</option>
                             @foreach ($companies as $company)
                                 <option value="{{ $company->id }}">
                                     {{ $company->company_name }}

@@ -17,7 +17,8 @@
         </div>
         <div class="form-group mb-2">
             <label for="">Choose your card</label>
-            <select class="form-control" wire:model="cards">
+            <select class="form-control" wire:model="card">
+                <option>Select card</option>
                 @foreach ($cards as $card)
                     <option value="{{ $card->id }}">
                         {{ $card->insurance_number }} - {{ $card->company->company_name }}

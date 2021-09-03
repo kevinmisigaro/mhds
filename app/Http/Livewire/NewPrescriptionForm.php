@@ -7,6 +7,7 @@ use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Prescription;
 use App\Models\InsuranceCard;
+use App\Rules\CardIsValid;
 
 class NewPrescriptionForm extends Component
 {
@@ -15,15 +16,23 @@ class NewPrescriptionForm extends Component
     public $photo;
     public $cards;
     public $card;
+    public $isDisabled = false;
 
     public function mount(){
         $this->cards = InsuranceCard::where('owner_id',Auth::user()->id)->with('company')->get();
     }
 
-    public $rules = [
-        'photo' => 'required|image',
-        'card' => 'required'
-    ];
+    protected function rules(){
+        return [
+            'photo' => 'required|image',
+            'card' => ['required','integer', new CardIsValid],
+        ];
+    }
+
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
 
     public function submit()
     {
@@ -33,6 +42,7 @@ class NewPrescriptionForm extends Component
 
         $prescription = new Prescription;
         $prescription->image = $path;
+        $prescription->card_id = $this->card;
         $prescription->patient_id = Auth::user()->id;
         $prescription->save();
 
