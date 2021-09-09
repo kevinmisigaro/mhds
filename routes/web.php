@@ -32,15 +32,22 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('dashboard/customer')->group(function () {
         Route::get('home', [CustomerDashboardController::class,'index']);
+
         Route::get('cards', [CustomerDashboardController::class,'displayCards']);
         Route::get('card/{cardId}',[CustomerDashboardController::class,'displayCard']);
         Route::get('new-card',[CustomerDashboardController::class,'newCard']);
+        Route::get('updateCard/{cardId}',[CustomerDashboardController::class,'displayUpdateCard']);
+        Route::patch('updateCard',[CustomerDashboardController::class,'updateCard']);
+
         Route::get('complaints',[CustomerDashboardController::class,'displayComplaints']);
         Route::get('new-complaint',[CustomerDashboardController::class,'newComplaint']);
+
         Route::get('prescriptions',[CustomerDashboardController::class,'displayPrescriptions']);
         Route::get('new-prescription', function(){
             return view('dashboard.customer.new-prescription');
         });
+
+        Route::get('profile',[CustomerDashboardController::class,'displayProfile']);
     });
 
     Route::prefix('dashboard/admin')->group(function(){

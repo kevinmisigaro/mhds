@@ -9,6 +9,9 @@ use App\Models\User;
 use App\Models\Customer;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\RegistrationConfirm;
+use Illuminate\Support\Facades\DB;
 
 class RegisterForm extends Component
 {
@@ -32,28 +35,44 @@ class RegisterForm extends Component
     ];
 
     public function submit(){
-        $this->validate();
 
-        $user = new User;
-        $user->name = $this->name;
-        $user->email = $this->email;
-        $user->password = Hash::make($this->password);
-        $user->save();
+        DB::beginTransaction();
 
-        $customer = new Customer;
-        $customer->user_id = $user->id;
-        $customer->save();
+        try{
+            $this->validate();
 
-        $card = new InsuranceCard;
-        $card->owner_id = $user->id;
-        $card->company_id = $this->company;
-        $card->type = 'Health';
-        $card->insurance_number = $this->card;
-        $card->save();
+            $user = new User;
+            $user->name = $this->name;
+            $user->email = $this->email;
+            $user->password = Hash::make($this->password);
+            $user->save();
 
-        if (Auth::attempt(['email' => $this->email, 'password' => $this->password])) {
-            return redirect('/dashboard/customer/home');
+            $customer = new Customer;
+            $customer->user_id = $user->id;
+            $customer->save();
+
+            $card = new InsuranceCard;
+            $card->owner_id = $user->id;
+            $card->company_id = $this->company;
+            $card->type = 'Health';
+            $card->insurance_number = $this->card;
+            $card->save();
+
+            Mail::to($user)->send(new RegistrationConfirm());
+
+            DB::commit();
+
+            if (Auth::attempt(['email' => $this->email, 'password' => $this->password])) {
+                return redirect('/dashboard/customer/home');
+            }
+
+        } catch (\Exception $e){
+            DB::rollback();
+            dd($e);
+            // return \redirect()->back();
         }
+
+        
     }
 
     public function mount(){

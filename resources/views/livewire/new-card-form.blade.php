@@ -24,7 +24,7 @@
             </select>
             @error('company') <small class="error">{{ $message }}</small> @enderror
         </div>
-        <div class="form-group">
+        <div class="form-group mb-2">
             <label for="">Image</label>
             <input type="file" class="form-control" wire:model="image">
             @error('image') <small class="error">{{ $message }}</small> @enderror

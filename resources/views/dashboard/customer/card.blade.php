@@ -3,6 +3,7 @@
 Card details
 @endslot
 <div>
+    
     <div class="row">
         <div class="col-md-6">
             <form>
@@ -33,6 +34,10 @@ Card details
                     @endif
                 </div>
             </form>
+            <br>
+            <a href="/dashboard/customer/updateCard/{{ $card->id }}" class="btn btn-warning">
+                Edit card
+              </a>
         </div>
     </div>
 </div>

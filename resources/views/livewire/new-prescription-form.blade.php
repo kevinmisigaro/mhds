@@ -28,8 +28,9 @@
             @error('card') <small class="error">{{ $message }}</small> @enderror
         </div>
         <div class="form-group mb-2">
-            <button class="btn btn-primary" type="submit">
+            <button class="btn btn-primary" type="submit" {{ $canSubmit == 2 ? '': 'disabled' }}>
                 Upload Photo
+                {{ $canSubmit == 3 ? '<span class="spinner-border spinner-border-sm"  role="status" aria-hidden="true" ></span>' : '' }}
             </button>
         </div>
     </form>
