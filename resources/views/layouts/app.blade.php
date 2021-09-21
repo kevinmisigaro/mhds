@@ -51,7 +51,7 @@
 
     </style>
     @livewireStyles
-    <title>MDDS</title>
+    <title>MHDS</title>
 </head>
 
 <body>

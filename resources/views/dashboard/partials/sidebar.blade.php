@@ -77,7 +77,7 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="/dashboard/admin/companie">
+        <a class="nav-link" href="/dashboard/admin/companies">
             <i class="far fa-fw fa-list-alt"></i>
             <span>Insurance Companies</span></a>
     </li>

@@ -10,6 +10,7 @@ use App\Models\Complaint;
 use App\Models\Prescription;
 use App\Models\ComplaintConversation;
 use Illuminate\Support\Facades\Auth;
+use App\Models\InsuranceCard;
 
 class AdminDashboardController extends Controller
 {
@@ -31,8 +32,12 @@ class AdminDashboardController extends Controller
 
     public function displayCustomerDetails($id){
         $customer = User::where('id',$id)->with(['customer','cards'])->first();
-
         return view('dashboard.admin.customer-details',\compact('customer'));
+    }
+
+    public function displayCustomerCard($id){
+        $card = InsuranceCard::where('id', $id)->with(['company','owner'])->first();
+        return view('dashboard.admin.customer-card',\compact('card'));
     }
 
     public function getInsurers(){
@@ -79,5 +84,29 @@ class AdminDashboardController extends Controller
         if($convo->save()){
             return \redirect()->back();
         }
+    }
+
+    public function approveCard($id){
+        $card = InsuranceCard::where('id',$id)->with('owner')->first();
+
+        $card->update([
+            'valid' => true
+        ]);
+
+        session()->flash('message', 'Card validated');
+
+        return \redirect('/dashboard/admin/customer/'.$card->owner->id);
+    }
+
+    public function disapproveCard($id){
+        $card = InsuranceCard::where('id',$id)->with('owner')->first();
+
+        $card->update([
+            'valid' => false
+        ]);
+
+        session()->flash('message', 'Card unvalidated.');
+
+        return \redirect('/dashboard/admin/customer/'.$card->owner->id);
     }
 }

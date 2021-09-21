@@ -12,7 +12,7 @@ class InsuranceCard extends Model
     protected $table = 'insurance_cards';
 
     public $fillable = [
-        'insurance_number', 'company_id', 'type', 'image'
+        'insurance_number', 'company_id', 'type', 'image', 'valid'
     ];
 
     public function owner(){

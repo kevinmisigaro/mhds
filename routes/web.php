@@ -58,6 +58,9 @@ Route::middleware('auth')->group(function () {
 
         Route::get('customers',[AdminDashboardController::class,'getCustomers']);
         Route::get('customer/{id}',[AdminDashboardController::class,'displayCustomerDetails']);
+        Route::get('customer/card/{id}',[AdminDashboardController::class,'displayCustomerCard']);
+        Route::get('customer/approvecard/{id}',[AdminDashboardController::class,'approveCard']);
+        Route::get('customer/disapprovecard/{id}',[AdminDashboardController::class,'disapproveCard']);
 
         Route::get('insurers',[AdminDashboardController::class,'getInsurers']);
         Route::get('doctors',[AdminDashboardController::class,'getDoctors']);

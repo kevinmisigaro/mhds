@@ -18,6 +18,12 @@
     
     </style>
 
+@if (session()->has('message'))
+<div class="alert alert-success">
+    {{ session('message') }}
+</div>
+@endif
+
     <h1 class="h3 mb-2 text-gray-800">{{ $customer->name }} details</h1>
     <br>
     <h4>
@@ -25,7 +31,7 @@
     </h4>
     <div class="row">
         @foreach ($customer->cards as $card)
-        <a href="#" class="col-md-4">
+        <a href="/dashboard/admin/customer/card/{{ $card->id }}" class="col-md-4">
             <div class="card mb-4 py-3 border-left-primary">
                 <div class="card-body">
                     <b>Company name:</b> {{ $card->company->company_name }} <br>
