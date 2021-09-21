@@ -19,8 +19,6 @@ class CreateComplaintsConversationTable extends Migration
             $table->foreign('complaint_id')->references('id')->on('complaints');
             $table->unsignedBigInteger('sender_id');
             $table->foreign('sender_id')->references('id')->on('users');
-            $table->unsignedBigInteger('receiver_id')->default(2);
-            $table->foreign('receiver_id')->references('id')->on('users');
             $table->longText('message');
             $table->boolean('sender_is_read')->default(true);
             $table->boolean('reciever_is_read')->default(false);

@@ -11,6 +11,7 @@ use App\Models\Prescription;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Models\InsuranceCompany;
+use App\Models\ComplaintConversation;
 
 class CustomerDashboardController extends Controller
 {
@@ -123,4 +124,40 @@ class CustomerDashboardController extends Controller
 
         return view('dashboard.customer.profile',compact('user'));
     }
+
+    public function displayComplaintChat($id){
+        $conversation = ComplaintConversation::where('complaint_id',$id)->get();
+
+        $convoId = ComplaintConversation::where('complaint_id',$id)->pluck('id')->first(); 
+
+        $complaint = Complaint::where('id',$id)->first();
+
+        return view('dashboard.customer.complaint-chat',\compact('conversation','convoId','complaint'));
+    }
+
+    public function sendComplaintMessage(Request $request){
+
+        $sampleconvo = ComplaintConversation::where('id',$request->convoId)->first(); 
+
+        $convo = new ComplaintConversation;
+        $convo->complaint_id = $sampleconvo->complaint_id;
+        $convo->sender_id = Auth::user()->id;
+        $convo->message = $request->message;
+        $convo->sender_is_read = true;
+        $convo->reciever_is_read = false;
+
+        if($convo->save()){
+            return \redirect()->back();
+        }
+    }
+
+    public function closeComplaint($id){
+        $complaint = Complaint::where('id',$id)->first();
+
+        $complaint->update([
+            'status' => 'closed'
+        ]);
+
+        return \redirect()->back();
+    }   
 }

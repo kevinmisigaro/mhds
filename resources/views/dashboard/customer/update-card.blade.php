@@ -19,8 +19,7 @@
             <br>
             <div class="row">
                 <div class="col-md-6">
-                    <form method="POST" action="/updateCard">
-                        @method('PATCH')
+                    <form method="POST" action="/dashboard/customer/updateCard">
                         @csrf
                         <div class="form-group mb-2">
                             <label for="">Insurance card number</label>

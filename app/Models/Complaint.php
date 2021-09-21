@@ -9,6 +9,10 @@ class Complaint extends Model
 {
     use HasFactory;
 
+    public $fillable = [
+        'status'
+    ];
+
     public function complainerDetails(){
         return $this->belongsTo(User::class,'complainer','id');
     }

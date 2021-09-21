@@ -37,10 +37,13 @@ Route::middleware('auth')->group(function () {
         Route::get('card/{cardId}',[CustomerDashboardController::class,'displayCard']);
         Route::get('new-card',[CustomerDashboardController::class,'newCard']);
         Route::get('updateCard/{cardId}',[CustomerDashboardController::class,'displayUpdateCard']);
-        Route::patch('updateCard',[CustomerDashboardController::class,'updateCard']);
+        Route::post('updateCard',[CustomerDashboardController::class,'updateCard']);
 
         Route::get('complaints',[CustomerDashboardController::class,'displayComplaints']);
         Route::get('new-complaint',[CustomerDashboardController::class,'newComplaint']);
+        Route::get('complaint-chat/{id}',[CustomerDashboardController::class,'displayComplaintChat']);
+        Route::post('sendComplaintChat',[CustomerDashboardController::class,'sendComplaintMessage']);
+        Route::get('closeComplaint/{id}',[CustomerDashboardController::class,'closeComplaint']);
 
         Route::get('prescriptions',[CustomerDashboardController::class,'displayPrescriptions']);
         Route::get('new-prescription', function(){
@@ -57,6 +60,8 @@ Route::middleware('auth')->group(function () {
         Route::get('doctors',[AdminDashboardController::class,'getDoctors']);
         Route::get('companies',[AdminDashboardController::class,'displayInsuranceCompanies']);
         Route::get('complaints',[AdminDashboardController::class,'displayComplaints']);
+        Route::get('complaint-chat/{id}',[AdminDashboardController::class,'displayComplaintChat']);
+        Route::post('sendComplaintChat',[AdminDashboardController::class,'sendComplaintMessage']);
     });
     
     Route::get('logout', [AuthController::class, 'logout']);

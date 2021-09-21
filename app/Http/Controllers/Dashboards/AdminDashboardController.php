@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\InsuranceCompany;
 use App\Models\Complaint;
+use App\Models\Prescription;
+use App\Models\ComplaintConversation;
+use Illuminate\Support\Facades\Auth;
 
 class AdminDashboardController extends Controller
 {
@@ -14,9 +17,11 @@ class AdminDashboardController extends Controller
         $customers = User::where('role','customer')->get();
         $insurers = User::where('role','insurer')->get();
         $doctors = User::where('role','doctor')->get();
+        $prescriptions = Prescription::get();
         $companies = InsuranceCompany::get();
+        $complaints = Complaint::get();
 
-        return view('dashboard.home',\compact('customers','insurers','doctors','companies'));
+        return view('dashboard.home',\compact('customers','insurers','doctors','companies','prescriptions','complaints'));
     }
 
     public function getCustomers(){
@@ -42,5 +47,31 @@ class AdminDashboardController extends Controller
     public function displayComplaints(){
         $complaints = Complaint::with('complainerDetails')->get();
         return view('dashboard.admin.complaints',\compact('complaints'));
+    }
+
+    public function displayComplaintChat($id){
+        $conversation = ComplaintConversation::where('complaint_id',$id)->get();
+
+        $convoId = ComplaintConversation::where('complaint_id',$id)->pluck('id')->first(); 
+
+        $complaint = Complaint::where('id',$id)->first();
+
+        return view('dashboard.admin.complaint-chat',\compact('conversation','convoId','complaint'));
+    }
+
+    public function sendComplaintMessage(Request $request){
+
+        $sampleconvo = ComplaintConversation::where('id',$request->convoId)->first(); 
+
+        $convo = new ComplaintConversation;
+        $convo->complaint_id = $sampleconvo->complaint_id;
+        $convo->sender_id = Auth::user()->id;
+        $convo->sender_is_read = false;
+        $convo->reciever_is_read = true;
+        $convo->message = $request->message;
+
+        if($convo->save()){
+            return \redirect()->back();
+        }
     }
 }

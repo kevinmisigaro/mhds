@@ -55,9 +55,9 @@
                             @endif
                         </td>
                         <td>
-                            <button class="btn btn-info text-white">
+                            <a href="/dashboard/admin/complaint-chat/{{ $complaint->id }}" class="btn btn-info text-white">
                                 View
-                            </button>
+                            </a>
                         </td>
                     </tr>
                     @endforeach

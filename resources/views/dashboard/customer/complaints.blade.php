@@ -5,7 +5,6 @@ Complaints
 @if (session()->has('message'))
 <div class="alert alert-success alert-dismissible fade show" role="alert">
     {{ session('message') }}
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
 <!-- Page Heading -->
@@ -53,9 +52,9 @@ Complaints
                             @endif
                         </td>
                         <td>
-                            <button class="btn btn-info text-white">
+                            <a href="/dashboard/customer/complaint-chat/{{ $complaint->id }}" class="btn btn-info text-white">
                                 View
-                            </button>
+                            </a>
                         </td>
                     </tr>
                     @endforeach
