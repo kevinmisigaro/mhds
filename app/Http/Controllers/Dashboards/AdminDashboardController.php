@@ -29,6 +29,12 @@ class AdminDashboardController extends Controller
         return view('dashboard.admin.customers',\compact('customers'));
     }
 
+    public function displayCustomerDetails($id){
+        $customer = User::where('id',$id)->with(['customer','cards'])->first();
+
+        return view('dashboard.admin.customer-details',\compact('customer'));
+    }
+
     public function getInsurers(){
         $insurers = User::where('role','insurer')->get();
         return view('dashboard.admin.insurers',\compact('insurers'));

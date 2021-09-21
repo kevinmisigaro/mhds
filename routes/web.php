@@ -55,7 +55,10 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('dashboard/admin')->group(function(){
         Route::get('home',[AdminDashboardController::class,'index']);
+
         Route::get('customers',[AdminDashboardController::class,'getCustomers']);
+        Route::get('customer/{id}',[AdminDashboardController::class,'displayCustomerDetails']);
+
         Route::get('insurers',[AdminDashboardController::class,'getInsurers']);
         Route::get('doctors',[AdminDashboardController::class,'getDoctors']);
         Route::get('companies',[AdminDashboardController::class,'displayInsuranceCompanies']);

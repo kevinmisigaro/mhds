@@ -77,18 +77,10 @@
     </li>
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInsurance" aria-expanded="true"
-          aria-controls="collapsePages">
-          <i class="fas fa-fw fa-folder"></i>
-          <span>Insurance</span>
-      </a>
-      <div id="collapseInsurance" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-              <a class="collapse-item" href="/dashboard/admin/companies">Insurance Companies</a>
-              <a class="collapse-item" href="#">Insurance Cards</a>
-          </div>
-      </div>
-  </li>
+        <a class="nav-link" href="/dashboard/admin/companie">
+            <i class="far fa-fw fa-list-alt"></i>
+            <span>Insurance Companies</span></a>
+    </li>
 
     <li class="nav-item">
         <a class="nav-link" href="#">

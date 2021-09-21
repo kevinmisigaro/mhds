@@ -68,9 +68,9 @@
                                 @endif
                             </td>
                             <td>
-                                <button class="btn btn-info text-white">
+                                <a href="/dashboard/admin/customer/{{ $customer->id }}" class="btn btn-info text-white">
                                     View
-                                </button>
+                                </a>
                             </td>
                         </tr>
                     @endforeach
