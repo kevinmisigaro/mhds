@@ -14,4 +14,8 @@ class PrescriptionDetails extends Model
     public function prescription(){
         return $this->belongsTo(Prescription::class,'prescription_id','id');
     }
+
+    public function drug(){
+        return $this->belongsTo(Stock::class,'drug_id','id');
+    }
 }

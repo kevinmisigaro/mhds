@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             CustomerSeeder::class,
             InsuranceCompanySeeder::class,
             InsuranceCardSeeder::class,
+            ProfitMarginSeeder::class
         ]);
     }
 }

@@ -17,10 +17,10 @@ class CreatePrescriptionDetailsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('prescription_id');
             $table->foreign('prescription_id')->references('id')->on('prescriptions');
-            $table->string('drug_name');
+            $table->unsignedBigInteger('drug_id');
+            $table->foreign('drug_id')->references('id')->on('stocks');
+            $table->float('selling_price',8,2);
             $table->integer('quantity');
-            $table->float('price', 2);
-            $table->string('dose');
             $table->timestamps();
         });
     }

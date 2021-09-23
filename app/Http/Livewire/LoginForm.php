@@ -20,12 +20,20 @@ class LoginForm extends Component
         $this->validate();
 
         if (Auth::attempt(['email' => $this->email, 'password' => $this->password])) {
+
+            //head to customer dashboard
             if (Auth::user()->role == 'customer') {
                 return redirect('/dashboard/customer/home');
             }
 
+            //head to admin dashboard
             if(Auth::user()->role == 'admin'){
                 return redirect('/dashboard/admin/home');
+            }
+
+            //head to insurer dashboard
+            if(Auth::user()->role == 'insurer'){
+                return \redirect('/dashboard/insurer/home');
             }
         }
 

@@ -19,6 +19,10 @@ class InsuranceCard extends Model
         return $this->belongsTo(User::class,'owner_id','id');
     }
 
+    public function prescriptions(){
+        return $this->hasMany(InsuranceCard::class);
+    }
+
     public function company(){
         return $this->belongsTo(InsuranceCompany::class,'company_id','id');
     }

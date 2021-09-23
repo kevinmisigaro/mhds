@@ -18,4 +18,8 @@ class InsuranceCompany extends Model
     public function manager(){
         return $this->belongsTo(User::class,'manager_id','id');
     }
+
+    public function margin(){
+        return $this->hasOne(ProfitMargin::class,'company_id');
+    }
 }

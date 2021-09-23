@@ -42,10 +42,10 @@ class NewPrescriptionForm extends Component
 
         $this->validate();
  
-        $path = $this->photo->store('prescriptions');
+        $path = $this->photo->store('prescriptions','public');
 
         $prescription = new Prescription;
-        $prescription->image = $path;
+        $prescription->image = '/storage/'.$path;
         $prescription->card_id = $this->card;
         $prescription->patient_id = Auth::user()->id;
         $prescription->save();

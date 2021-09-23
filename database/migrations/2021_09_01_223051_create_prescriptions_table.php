@@ -26,6 +26,7 @@ class CreatePrescriptionsTable extends Migration
             $table->foreign('manager_id')->references('id')->on('users');
             $table->unsignedBigInteger('insurer_id')->nullable();
             $table->foreign('insurer_id')->references('id')->on('users');
+            $table->date('delivery_date')->nullable();
             $table->timestamps();
         });
     }

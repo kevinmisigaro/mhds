@@ -4,6 +4,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Dashboards\CustomerDashboardController;
 use App\Http\Controllers\Dashboards\AdminDashboardController;
+use App\Http\Controllers\Dashboards\InsuranceDashboardController;
+use App\Http\Controllers\StockController;
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\PrescriptionController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -53,6 +58,18 @@ Route::middleware('auth')->group(function () {
         Route::get('profile',[CustomerDashboardController::class,'displayProfile']);
     });
 
+
+
+
+    Route::prefix('dashboard/insurer')->group(function(){
+        Route::get('home',[InsuranceDashboardController::class,'index']);
+        Route::get('prescriptions',[InsuranceDashboardController::class,'displayPrescriptions']);
+        Route::get('prescription/{id}',[InsuranceDashboardController::class,'displayPrescriptionDetails']);
+        Route::get('customers',[InsuranceDashboardController::class,'displayCustomers']);
+    });
+
+
+
     Route::prefix('dashboard/admin')->group(function(){
         Route::get('home',[AdminDashboardController::class,'index']);
 
@@ -62,12 +79,21 @@ Route::middleware('auth')->group(function () {
         Route::get('customer/approvecard/{id}',[AdminDashboardController::class,'approveCard']);
         Route::get('customer/disapprovecard/{id}',[AdminDashboardController::class,'disapproveCard']);
 
+        Route::get('prescriptions',[AdminDashboardController::class,'displayPrescriptions']);
+
         Route::get('insurers',[AdminDashboardController::class,'getInsurers']);
         Route::get('doctors',[AdminDashboardController::class,'getDoctors']);
+
         Route::get('companies',[AdminDashboardController::class,'displayInsuranceCompanies']);
+        Route::post('company/sellingprice/update',[CompanyController::class,'updateSellingPrice']);
+
         Route::get('complaints',[AdminDashboardController::class,'displayComplaints']);
         Route::get('complaint-chat/{id}',[AdminDashboardController::class,'displayComplaintChat']);
         Route::post('sendComplaintChat',[AdminDashboardController::class,'sendComplaintMessage']);
+
+        Route::get('stock',[StockController::class,'index']);
+        Route::get('create/stock',[StockController::class,'create']);
+        Route::post('stock/store',[StockController::class,'store']);
     });
     
     Route::get('logout', [AuthController::class, 'logout']);

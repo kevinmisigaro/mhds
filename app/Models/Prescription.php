@@ -17,6 +17,10 @@ class Prescription extends Model
         return $this->belongsTo(User::class,'patient_id','id');
     }
 
+    public function card(){
+        return $this->belongsTo(InsuranceCard::class,'card_id','id');
+    }
+
     public function managerApproved(){
         return $this->belongsTo(User::class,'manager_id','id');
     }

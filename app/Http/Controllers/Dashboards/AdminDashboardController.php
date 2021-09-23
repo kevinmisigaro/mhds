@@ -51,7 +51,7 @@ class AdminDashboardController extends Controller
     }
 
     public function displayInsuranceCompanies(){
-        $companies = InsuranceCompany::with('manager')->get();
+        $companies = InsuranceCompany::with('manager','margin')->get();
         return view('dashboard.admin.insurance-companies',\compact('companies'));
     }
 
@@ -108,5 +108,10 @@ class AdminDashboardController extends Controller
         session()->flash('message', 'Card unvalidated.');
 
         return \redirect('/dashboard/admin/customer/'.$card->owner->id);
+    }
+
+    public function displayPrescriptions(){
+        $prescriptions = Prescription::with('patient')->get();
+        return view('dashboard.admin.prescriptions',\compact('prescriptions'));
     }
 }

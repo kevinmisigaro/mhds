@@ -83,7 +83,7 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="/dashboard/admin/prescriptions">
             <i class="far fa-fw fa-list-alt"></i>
             <span>Prescriptions</span></a>
     </li>
@@ -95,9 +95,45 @@
     </li>
 
     <li class="nav-item">
+        <a class="nav-link" href="/dashboard/admin/stock">
+            <i class="far fa-fw fa-comment"></i>
+            <span>Stock</span></a>
+    </li>
+
+    <li class="nav-item">
         <a class="nav-link" href="#">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Reports</span></a>
+    </li>
+    @endif
+
+
+
+
+    @if (\Illuminate\Support\Facades\Auth::user()->role == 'insurer')
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/dashboard/insurer/home">
+        <div class="sidebar-brand-text mx-3">MDHS</div>
+    </a>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+
+    <li class="nav-item active">
+        <a class="nav-link" href="/dashboard/insurer/home">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span></a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="/dashboard/insurer/customers">
+            <i class="far fa-fw fa-list-alt"></i>
+            <span>Customers</span></a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="/dashboard/insurer/prescriptions">
+            <i class="far fa-fw fa-comment"></i>
+            <span>Prescriptions</span></a>
     </li>
     @endif
 
