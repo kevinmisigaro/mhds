@@ -9,6 +9,10 @@ class Prescription extends Model
 {
     use HasFactory;
 
+    public $fillable = [
+        'approved_by_manager', 'approved_by_insurer'
+    ];
+
     public function details(){
         return $this->hasMany(PrescriptionDetails::class);
     }

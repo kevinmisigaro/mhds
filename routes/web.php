@@ -8,6 +8,7 @@ use App\Http\Controllers\Dashboards\InsuranceDashboardController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\PrescriptionController;
+use App\Http\Livewire\PrescriptionDetails;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,12 +60,14 @@ Route::middleware('auth')->group(function () {
     });
 
 
+    Route::post('/prescriptions/store',[PrescriptionController::class, 'storePrescription']);
+
 
 
     Route::prefix('dashboard/insurer')->group(function(){
         Route::get('home',[InsuranceDashboardController::class,'index']);
         Route::get('prescriptions',[InsuranceDashboardController::class,'displayPrescriptions']);
-        Route::get('prescription/{id}',[InsuranceDashboardController::class,'displayPrescriptionDetails']);
+        Route::get('prescription/{id}',PrescriptionDetails::class);
         Route::get('customers',[InsuranceDashboardController::class,'displayCustomers']);
     });
 

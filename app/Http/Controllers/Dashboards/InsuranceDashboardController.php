@@ -10,6 +10,7 @@ use App\Models\Prescription;
 use App\Models\PrescriptionDetails;
 use Illuminate\Support\Facades\Auth;
 use App\Models\InsuranceCard;
+use App\Models\Stock;
 
 class InsuranceDashboardController extends Controller
 {
@@ -29,9 +30,9 @@ class InsuranceDashboardController extends Controller
 
     public function displayPrescriptionDetails($id){
         $prescription = Prescription::with(['patient','card'])->first();
-        
+        $stock = Stock::all();
 
-        return view('dashboard.insurer.prescription-details',\compact('prescription'));
+        return view('dashboard.insurer.prescription-details',\compact('prescription','stock'));
     }
 
     public function displayCustomers(){

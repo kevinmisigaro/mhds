@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>{{ $title }}</title>
+    <title>{{ env('APP_NAME') }} | {{ $title }}</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('dashboard-assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet"
