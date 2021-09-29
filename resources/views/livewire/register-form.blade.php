@@ -67,6 +67,10 @@
                         </button>
                     </div>
                 </div>
+                <br><br>
+                <div class="my-3 text-center">
+                    If your an insurance company, <a href="/company/login">click here</a> to register.
+                </div>
             </form>
         </div>
     </div>

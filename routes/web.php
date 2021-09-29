@@ -8,6 +8,7 @@ use App\Http\Controllers\Dashboards\InsuranceDashboardController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\PrescriptionController;
+use App\Http\Controllers\ReportController;
 use App\Http\Livewire\PrescriptionDetails;
 
 /*
@@ -29,6 +30,12 @@ Route::get('/register', [AuthController::class, 'showRegister']);
 Route::get('/login',function(){
     return view('auth.login');
 });
+
+Route::get('/company/login',function(){
+    return view('auth.company-register');
+});
+
+Route::post('/company/register',[AuthController::class, 'company']);
 
 Route::get('/terms', function(){
     return view('terms');
@@ -71,8 +78,6 @@ Route::middleware('auth')->group(function () {
         Route::get('customers',[InsuranceDashboardController::class,'displayCustomers']);
     });
 
-
-
     Route::prefix('dashboard/admin')->group(function(){
         Route::get('home',[AdminDashboardController::class,'index']);
 
@@ -81,6 +86,8 @@ Route::middleware('auth')->group(function () {
         Route::get('customer/card/{id}',[AdminDashboardController::class,'displayCustomerCard']);
         Route::get('customer/approvecard/{id}',[AdminDashboardController::class,'approveCard']);
         Route::get('customer/disapprovecard/{id}',[AdminDashboardController::class,'disapproveCard']);
+
+        Route::get('reports',[ReportController::class,'admin']);
 
         Route::get('prescriptions',[AdminDashboardController::class,'displayPrescriptions']);
 

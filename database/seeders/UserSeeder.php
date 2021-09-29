@@ -19,7 +19,8 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'Kanye West',
             'email' => 'donda@gmail.com',
-            'password' => Hash::make('123456')
+            'password' => Hash::make('123456'),
+            'created_at' => '2021-09-28 02:07:28'
         ]);
 
         //ADMINISTRATOR
@@ -27,7 +28,8 @@ class UserSeeder extends Seeder
             'name' => 'admin',
             'email' => 'admin@admin.com',
             'password' => Hash::make('123456'),
-            'role' => 'admin'
+            'role' => 'admin',
+            'created_at' => '2021-09-28 02:07:28'
         ]);
 
         //INSURER
@@ -35,7 +37,8 @@ class UserSeeder extends Seeder
             'name' => 'Micheal Edwards',
             'email' => 'edwards@gmail.com',
             'password' => Hash::make('123456'),
-            'role' => 'insurer'
+            'role' => 'insurer',
+            'created_at' => '2021-09-28 02:07:28'
         ]);
 
         //DOCTOR
@@ -43,7 +46,8 @@ class UserSeeder extends Seeder
             'name' => 'Caleb Abel',
             'email' => 'abel@gmail.com',
             'password' => Hash::make('123456'),
-            'role' => 'doctor'
+            'role' => 'doctor',
+            'created_at' => '2021-09-28 02:07:28'
         ]);
     }
 

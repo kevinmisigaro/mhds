@@ -101,7 +101,7 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="/dashboard/admin/reports">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Reports</span></a>
     </li>
