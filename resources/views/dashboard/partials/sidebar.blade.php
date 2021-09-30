@@ -135,6 +135,12 @@
             <i class="far fa-fw fa-comment"></i>
             <span>Prescriptions</span></a>
     </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="/dashboard/insurer/reports">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Reports</span></a>
+    </li>
     @endif
 
     <!-- Divider -->

@@ -153,7 +153,15 @@
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">
                     {{ \Illuminate\Support\Facades\Auth::user()->name }}
                 </span>
+                @if (\Illuminate\Support\Facades\Auth::user()->role == 'customer')
+                    @if (\Illuminate\Support\Facades\Auth::user()->customer->profile_image)
+                    <img class="img-profile rounded-circle" src="{{ env('APP_URL') }}{{ \Illuminate\Support\Facades\Auth::user()->customer->profile_image }}">
+                    @else
+                    <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                    @endif
+                @else
                 <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                @endif
             </a>
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">

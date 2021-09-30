@@ -18,6 +18,22 @@ class StockController extends Controller
         return \view('dashboard.admin.new-stock');
     }
 
+    public function update(Request $request){
+        $stock = Stock::where('id', $request->id)->first();
+
+        $stock->update([
+            'generic_name' => $request->generic,
+            'brand_name' => $request->brand,
+            'quantity' => $request->quantity,
+            'purchase_price' => $request->price,
+            'dosage' => $request->dosage,
+            'strength' => $request->strength,
+            'expiry_date' => $request->date
+        ]);
+
+        return \redirect()->back();
+    }
+
     public function store(Request $request){
         $validator = Validator::make($request->all(), [
             'generic' => 'required|unique:stocks,generic_name',

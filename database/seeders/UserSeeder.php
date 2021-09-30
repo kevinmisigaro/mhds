@@ -20,7 +20,8 @@ class UserSeeder extends Seeder
             'name' => 'Kanye West',
             'email' => 'donda@gmail.com',
             'password' => Hash::make('123456'),
-            'created_at' => '2021-09-28 02:07:28'
+            'created_at' => '2021-09-28 02:07:28',
+            'updated_at' => '2021-09-28 02:07:28'
         ]);
 
         //ADMINISTRATOR
@@ -29,7 +30,8 @@ class UserSeeder extends Seeder
             'email' => 'admin@admin.com',
             'password' => Hash::make('123456'),
             'role' => 'admin',
-            'created_at' => '2021-09-28 02:07:28'
+            'created_at' => '2021-09-28 02:07:28',
+            'updated_at' => '2021-09-28 02:07:28'
         ]);
 
         //INSURER
@@ -38,7 +40,8 @@ class UserSeeder extends Seeder
             'email' => 'edwards@gmail.com',
             'password' => Hash::make('123456'),
             'role' => 'insurer',
-            'created_at' => '2021-09-28 02:07:28'
+            'created_at' => '2021-09-28 02:07:28',
+            'updated_at' => '2021-09-28 02:07:28'
         ]);
 
         //DOCTOR
@@ -47,7 +50,8 @@ class UserSeeder extends Seeder
             'email' => 'abel@gmail.com',
             'password' => Hash::make('123456'),
             'role' => 'doctor',
-            'created_at' => '2021-09-28 02:07:28'
+            'created_at' => '2021-09-28 02:07:28',
+            'updated_at' => '2021-09-28 02:07:28'
         ]);
     }
 

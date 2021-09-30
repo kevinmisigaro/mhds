@@ -24,7 +24,7 @@ use App\Http\Livewire\PrescriptionDetails;
 
 Route::get('/', function () {
     return view('home');
-});
+})->name('login');
 
 Route::get('/register', [AuthController::class, 'showRegister']);
 Route::get('/login',function(){
@@ -46,6 +46,9 @@ Route::middleware('auth')->group(function () {
     Route::prefix('dashboard/customer')->group(function () {
         Route::get('home', [CustomerDashboardController::class,'index']);
 
+        Route::post('update-details',[AuthController::class,'updateCustomer']);
+        Route::post('update-avatar',[AuthController::class,'updateCustomerImage']);
+
         Route::get('cards', [CustomerDashboardController::class,'displayCards']);
         Route::get('card/{cardId}',[CustomerDashboardController::class,'displayCard']);
         Route::get('new-card',[CustomerDashboardController::class,'newCard']);
@@ -66,17 +69,20 @@ Route::middleware('auth')->group(function () {
         Route::get('profile',[CustomerDashboardController::class,'displayProfile']);
     });
 
-
     Route::post('/prescriptions/store',[PrescriptionController::class, 'storePrescription']);
-
-
 
     Route::prefix('dashboard/insurer')->group(function(){
         Route::get('home',[InsuranceDashboardController::class,'index']);
         Route::get('prescriptions',[InsuranceDashboardController::class,'displayPrescriptions']);
         Route::get('prescription/{id}',PrescriptionDetails::class);
         Route::get('customers',[InsuranceDashboardController::class,'displayCustomers']);
+        Route::get('create-customer', function(){
+            return view('dashboard.insurer.create-customer');
+        });
+        Route::post('store-customer',[AuthController::class,'storeCustomerByInsurer']);
     });
+
+    Route::get('company/status/{id}',[CompanyController::class,'updateStatus']);
 
     Route::prefix('dashboard/admin')->group(function(){
         Route::get('home',[AdminDashboardController::class,'index']);
@@ -104,6 +110,7 @@ Route::middleware('auth')->group(function () {
         Route::get('stock',[StockController::class,'index']);
         Route::get('create/stock',[StockController::class,'create']);
         Route::post('stock/store',[StockController::class,'store']);
+        Route::post('stock/update',[StockController::class,'update']);
     });
     
     Route::get('logout', [AuthController::class, 'logout']);

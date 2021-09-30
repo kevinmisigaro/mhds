@@ -16,7 +16,7 @@ class CreateInsuaranceCompaniesTable extends Migration
         Schema::create('insurance_companies', function (Blueprint $table) {
             $table->id();
             $table->string('company_name');
-            $table->boolean('active')->default(true);
+            $table->boolean('active')->default(false);
             $table->unsignedBigInteger('manager_id');
             $table->foreign('manager_id')->references('id')->on('users');
             $table->timestamps();

@@ -28,4 +28,14 @@ class CompanyController extends Controller
 
         return \redirect()->back();
     }
+
+    public function updateStatus($id){
+        $company = InsuranceCompany::where('id', $id)->first();
+
+        $company->update([
+            'active' => !$company->active
+        ]);
+
+        return \redirect()->back();
+    }
 }
