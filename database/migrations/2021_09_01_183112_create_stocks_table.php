@@ -22,6 +22,7 @@ class CreateStocksTable extends Migration
             $table->string('dosage');
             $table->string('strength');
             $table->date('expiry_date');
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }

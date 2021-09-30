@@ -20,7 +20,7 @@ class PrescriptionDetails extends Component
 
     public function mount($id){
         $this->prescription = Prescription::where('id', $id)->with(['patient','card'])->first();
-        $this->stock = Stock::all();
+        $this->stock = Stock::where('status', true)->get();
     }
 
     protected $rules = [

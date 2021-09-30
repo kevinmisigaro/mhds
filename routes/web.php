@@ -111,6 +111,7 @@ Route::middleware('auth')->group(function () {
         Route::get('create/stock',[StockController::class,'create']);
         Route::post('stock/store',[StockController::class,'store']);
         Route::post('stock/update',[StockController::class,'update']);
+        Route::get('stock/status/{id}',[StockController::class,'status']);
     });
     
     Route::get('logout', [AuthController::class, 'logout']);

@@ -16,9 +16,9 @@ Medicine Digital Delivery Solution system built with Laravel v.8
 
 ## Authentication
 
-* Customer email: donda@gmail.com ; pass: 123456
-* Admin email: admin@admin.com ;  pass: 123456
-* Insurer email: edwards@gmail.com ; pass: 123456
+* Sample Customer email: donda@gmail.com ; pass: 123456
+* Sample Admin email: admin@admin.com ;  pass: 123456
+* Sample Insurer email: edwards@gmail.com ; pass: 123456
 
 ## System modules
 

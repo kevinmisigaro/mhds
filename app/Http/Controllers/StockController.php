@@ -69,6 +69,15 @@ class StockController extends Controller
         session()->flash('message', 'The drug name you entered exists');
 
         return \redirect()->back();
+    }
 
+    public function status($id){
+        $stock = Stock::where('id',$id)->first();
+
+        $stock->update([
+            'status' => !$stock->status
+        ]);
+
+        return redirect()->back();
     }
 }
