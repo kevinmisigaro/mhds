@@ -8,6 +8,7 @@ use App\Models\Prescription;
 use App\Models\Complaint;
 use App\Models\Stock;
 use App\Models\PrescriptionDetails;
+use Illuminate\Support\Facades\Auth;
 
 class ReportController extends Controller
 {
@@ -21,9 +22,35 @@ class ReportController extends Controller
         $amount = 0.0;
 
         foreach ($details as $key => $detail) {
-            $amount += $detail->selling_price;
+            $amount += $detail->selling_price* $detail->quantity;
         }
 
         return view('dashboard.admin.reports', \compact('users','prescriptions','complaints','drugs','amount'));
+    }
+
+    public function insurer(){
+
+        $prescriptions = [];
+        $amount = 0.0;
+
+        if (Prescription::where([
+            'manager_id' => Auth::id(),
+            'approved_by_insurer' => true
+            ])->exists()) {
+            
+                $prescriptions = Prescription::where([
+                    'manager_id' => Auth::id(),
+                    'approved_by_insurer' => true
+                    ])->with('details')->get();
+        
+                $amount = 0.0;
+        
+                foreach ($prescriptions->details as $key => $detail) {
+                    $amount += $detail->selling_price * $detail->quantity;
+                }
+
+        } 
+
+        return view('dashboard.insurer.reports', \compact('amount','prescriptions'));
     }
 }

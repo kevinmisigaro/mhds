@@ -80,6 +80,7 @@ Route::middleware('auth')->group(function () {
             return view('dashboard.insurer.create-customer');
         });
         Route::post('store-customer',[AuthController::class,'storeCustomerByInsurer']);
+        Route::get('reports', [ReportController::class,'insurer']);
     });
 
     Route::get('company/status/{id}',[CompanyController::class,'updateStatus']);
