@@ -58,7 +58,7 @@ class RegisterForm extends Component
             $card->insurance_number = $this->card;
             $card->save();
 
-            Mail::to($user)->send(new RegistrationConfirm());
+            // Mail::to($user)->send(new RegistrationConfirm());
 
             DB::commit();
 

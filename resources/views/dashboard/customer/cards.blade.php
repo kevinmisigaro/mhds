@@ -38,7 +38,7 @@ Cards
                 <div class="card-body">
                     <b>Company name:</b> {{ $card->company->company_name }} <br>
                     <b>Membership number:</b> {{ $card->insurance_number }} <br>
-                    <b>Name:</b> {{ \ Illuminate\Support\Facades\Auth::user()->name }} <br>
+                    <b>Name:</b> {{ \Illuminate\Support\Facades\Auth::user()->name }} <br>
                     <b>Sex:</b> @if ($card->sex == null)
                     TBD
                     @else
