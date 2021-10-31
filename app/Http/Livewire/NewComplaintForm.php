@@ -11,10 +11,12 @@ class NewComplaintForm extends Component
 {
     public $title;
     public $description;
+    public $type;
 
     protected $rules = [
         'title' => 'required|min:4',
-        'description' => 'required|min:6'
+        'description' => 'required|min:6',
+        'type' => 'required'
     ];
 
     public function submit(){
@@ -24,6 +26,7 @@ class NewComplaintForm extends Component
         $complaint->subject = $this->title;
         $complaint->description = $this->description;
         $complaint->status = 'open';
+        $complaint->complaint_type = (int)$this->type;
         $complaint->complainer = Auth::user()->id;
         $complaint->save();
 

@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Models\Customer;
 
 class CustomerSeeder extends Seeder
 {
@@ -14,8 +14,8 @@ class CustomerSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('customers')->insert([
-            'user_id' => 1,
-        ]);
+        // Customer::create([
+        //     'user_id' => 1
+        // ]);
     }
 }

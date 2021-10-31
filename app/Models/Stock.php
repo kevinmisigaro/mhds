@@ -10,7 +10,7 @@ class Stock extends Model
     use HasFactory;
 
     public $fillable = [
-        'generic_name', 'brand_name', 'quantity', 'purchase_price', 'dosage', 'strength', 'expiry_date','status'
+        'generic_name', 'brand_name','dosage', 'strength', 
     ];
 
     public function prescription(){

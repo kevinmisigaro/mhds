@@ -15,6 +15,18 @@
             <input type="text" wire:model="title" class="form-control">
             @error('title') <small class="error">{{ $message }}</small> @enderror
         </div>
+        <div class="form-group mb-2">
+            <label for="">Complaint Type</label>
+            <select wire:model="type" class="form-control">
+                <option value="1">
+                    To Insurer
+                </option>
+                <option value="2">
+                    To Service Provider
+                </option>
+            </select>
+            @error('type') <small class="error">{{ $message }}</small> @enderror
+        </div>
         <div class="form-group mb-4">
             <label for="">Description</label>
             <textarea wire:model="description" class="form-control" width="100%" rows="10"></textarea>

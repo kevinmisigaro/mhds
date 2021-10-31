@@ -17,12 +17,8 @@ class CreateStocksTable extends Migration
             $table->id();
             $table->string('generic_name')->unique();
             $table->string('brand_name')->unique();
-            $table->integer('quantity');
-            $table->float('purchase_price',8,2);
             $table->string('dosage');
             $table->string('strength');
-            $table->date('expiry_date');
-            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }

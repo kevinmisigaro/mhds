@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Prescription;
 use App\Models\InsuranceCard;
 use App\Rules\CardIsValid;
+use App\Models\InsuranceCompany;
 
 class NewPrescriptionForm extends Component
 {
@@ -17,15 +18,21 @@ class NewPrescriptionForm extends Component
     public $cards;
     public $card;
     public $canSubmit = 1;
+    public $companies;
+    public $company;
+    public $clinic;
 
     public function mount(){
         $this->cards = InsuranceCard::where('owner_id',Auth::user()->id)->with('company')->get();
+        $this->companies = InsuranceCompany::all();
     }
 
     protected function rules(){
         return [
-            'photo' => 'required|image',
+            'photo' => 'required',
             'card' => ['required','integer', new CardIsValid],
+            'clinic' => 'required',
+            'company' => 'required'
         ];
     }
 
@@ -48,6 +55,8 @@ class NewPrescriptionForm extends Component
         $prescription->image = '/storage/'.$path;
         $prescription->card_id = $this->card;
         $prescription->patient_id = Auth::user()->id;
+        $prescription->company_id = $this->company;
+        $prescription->hospital_name = $this->clinic;
         $prescription->save();
 
         $this->canSubmit = 1;

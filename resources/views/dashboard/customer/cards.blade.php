@@ -39,16 +39,8 @@ Cards
                     <b>Company name:</b> {{ $card->company->company_name }} <br>
                     <b>Membership number:</b> {{ $card->insurance_number }} <br>
                     <b>Name:</b> {{ \Illuminate\Support\Facades\Auth::user()->name }} <br>
-                    <b>Sex:</b> @if ($card->sex == null)
-                    TBD
-                    @else
-                    {{ $card->sex }}
-                    @endif <br>
-                    <b>DOB:</b> @if ($card->dob == null)
-                    TBD
-                    @else
-                    {{ $card->dob }}
-                    @endif
+                    <b>Sex:</b> {{ $card->owner->customer->sex }} <br>
+                    <b>DOB:</b> {{ $card->owner->customer->dob }} 
                 </div>
                 <div class="card-footer bg-white">
                     @if ($card->valid)

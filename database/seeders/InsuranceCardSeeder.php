@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Models\InsuranceCard;
 
 class InsuranceCardSeeder extends Seeder
 {
@@ -14,11 +14,13 @@ class InsuranceCardSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('insurance_cards')->insert([
+        InsuranceCard::create([
             'insurance_number' => '1234XYZ',
             'owner_id' => 1,
             'company_id' => 1,
             'type' => 'Health',
+            'issue_date' => '2019-06-01',
+            'expiry_date' => '2021-06-01'
         ]);
     }
 }

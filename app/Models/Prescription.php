@@ -10,7 +10,8 @@ class Prescription extends Model
     use HasFactory;
 
     public $fillable = [
-        'approved_by_manager', 'approved_by_insurer'
+        'approved_by_admin', 'approved_by_insurer', 'patient_id', 'image', 'card_id',
+        'delivery_date', 'hospital_name', 'company_id'
     ];
 
     public function details(){
@@ -23,6 +24,10 @@ class Prescription extends Model
 
     public function card(){
         return $this->belongsTo(InsuranceCard::class,'card_id','id');
+    }
+
+    public function company(){
+        
     }
 
     public function managerApproved(){

@@ -22,7 +22,7 @@ Prescriptions
                 <thead>
                     <tr>
                         <th>S/N</th>
-                        <th>Approved by Manager</th>
+                        <th>Approved by SP</th>
                         <th>Approved by Insurer</th>
                         <th>Upload date</th>
                         <th>Actions</th>
@@ -31,7 +31,7 @@ Prescriptions
                 <tfoot>
                     <tr>
                         <th>S/N</th>
-                        <th>Approved by Manager</th>
+                        <th>Approved by SP</th>
                         <th>Approved by Insurer</th>
                         <th>Upload date</th>
                         <th>Actions</th>

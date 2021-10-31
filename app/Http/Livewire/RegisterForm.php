@@ -12,9 +12,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\RegistrationConfirm;
 use Illuminate\Support\Facades\DB;
+use Livewire\WithFileUploads;
 
 class RegisterForm extends Component
 {
+    use WithFileUploads;
+
     public $companies;
     public $registerformloading;
 
@@ -25,22 +28,35 @@ class RegisterForm extends Component
     public $password;
     public $confirmpassword;
 
+    public $issueDate;
+    public $expiryDate;
+
+    public $dob;
+    public $sex;
+
+    public $image;
+
     protected $rules = [
         'name' => 'required|min:6',
         'email' => 'required|email|unique:users,email',
         'company' => 'required',
         'card' => 'required',
         'password' => 'required|min:6',
-        'confirmpassword' => 'required|min:6'
+        'confirmpassword' => 'required|min:6',
+        'issueDate' => 'required',
+        'expiryDate' => 'required',
+        'sex' => 'required',
+        'dob' => 'required',
+        'image' => 'required'
     ];
 
     public function submit(){
 
+        $this->validate();
+
         DB::beginTransaction();
 
         try{
-            $this->validate();
-
             $user = new User;
             $user->name = $this->name;
             $user->email = $this->email;
@@ -49,6 +65,8 @@ class RegisterForm extends Component
 
             $customer = new Customer;
             $customer->user_id = $user->id;
+            $customer->sex = $this->sex;
+            $customer->dob = $this->dob;
             $customer->save();
 
             $card = new InsuranceCard;
@@ -56,6 +74,9 @@ class RegisterForm extends Component
             $card->company_id = $this->company;
             $card->type = 'Health';
             $card->insurance_number = $this->card;
+            $card->issue_date = $this->issueDate;
+            $card->expiry_date = $this->expiryDate;
+            $card->image = $this->image->store('cards');
             $card->save();
 
             // Mail::to($user)->send(new RegistrationConfirm());

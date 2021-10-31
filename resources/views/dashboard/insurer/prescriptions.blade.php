@@ -11,7 +11,7 @@
                         <tr>
                             <th>Prescription ID</th>
                             <th>Patient</th>
-                            <th>Approved by Manager</th>
+                            <th>Approved by SP</th>
                             <th>Approved by Insurer</th>
                             <th>Upload date</th>
                             <th>Actions</th>
@@ -21,7 +21,7 @@
                         <tr>
                             <th>Prescription ID</th>
                             <th>Patient</th>
-                            <th>Approved by Manager</th>
+                            <th>Approved by SP</th>
                             <th>Approved by Insurer</th>
                             <th>Upload date</th>
                             <th>Actions</th>

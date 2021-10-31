@@ -56,7 +56,7 @@ class AdminDashboardController extends Controller
     }
 
     public function displayComplaints(){
-        $complaints = Complaint::with('complainerDetails')->get();
+        $complaints = Complaint::where('complaint_type', 2)->with('complainerDetails')->get();
         return view('dashboard.admin.complaints',\compact('complaints'));
     }
 

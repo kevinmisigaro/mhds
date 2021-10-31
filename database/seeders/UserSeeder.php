@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class UserSeeder extends Seeder
 {
@@ -16,42 +17,42 @@ class UserSeeder extends Seeder
     public function run()
     {
         //CUSTOMER
-        DB::table('users')->insert([
-            'name' => 'Kanye West',
-            'email' => 'donda@gmail.com',
-            'password' => Hash::make('123456'),
-            'created_at' => '2021-09-28 02:07:28',
-            'updated_at' => '2021-09-28 02:07:28'
-        ]);
+        // User::create([
+        //     'name' => 'Kanye West',
+        //     'email' => 'donda@gmail.com',
+        //     'password' => Hash::make('123456'),
+        // ]);
 
         //ADMINISTRATOR
-        DB::table('users')->insert([
+        User::create([
             'name' => 'admin',
             'email' => 'admin@admin.com',
             'password' => Hash::make('123456'),
             'role' => 'admin',
-            'created_at' => '2021-09-28 02:07:28',
-            'updated_at' => '2021-09-28 02:07:28'
         ]);
 
-        //INSURER
-        DB::table('users')->insert([
+        //INSURER #1
+        User::create([
             'name' => 'Micheal Edwards',
             'email' => 'edwards@gmail.com',
             'password' => Hash::make('123456'),
             'role' => 'insurer',
-            'created_at' => '2021-09-28 02:07:28',
-            'updated_at' => '2021-09-28 02:07:28'
+        ]);
+
+        //INSURER #2
+        User::create([
+            'name' => 'Ole Gunnar',
+            'email' => 'ole@gmail.com',
+            'password' => Hash::make('123456'),
+            'role' => 'insurer',
         ]);
 
         //DOCTOR
-        DB::table('users')->insert([
+        User::create([
             'name' => 'Caleb Abel',
             'email' => 'abel@gmail.com',
             'password' => Hash::make('123456'),
             'role' => 'doctor',
-            'created_at' => '2021-09-28 02:07:28',
-            'updated_at' => '2021-09-28 02:07:28'
         ]);
     }
 

@@ -23,6 +23,8 @@ class CreateInsuranceCardsTable extends Migration
             $table->string('type');
             $table->boolean('valid')->default(false);
             $table->string('image')->nullable();
+            $table->date('issue_date');
+            $table->date('expiry_date');
             $table->timestamps();
         });
     }

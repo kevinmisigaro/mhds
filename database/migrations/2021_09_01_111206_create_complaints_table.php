@@ -19,6 +19,7 @@ class CreateComplaintsTable extends Migration
             $table->foreign('complainer')->references('id')->on('users');
             $table->string('subject');
             $table->longText('description');
+            $table->integer('complaint_type')->default(1); //1 is to SP; 2 is to Insurer
             $table->enum('status',['open','closed'])->default('open');
             $table->timestamps();
         });

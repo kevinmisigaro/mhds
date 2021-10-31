@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Models\Stock;
 
 class StockSeeder extends Seeder
 {
@@ -14,14 +14,11 @@ class StockSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('stocks')->insert([
+        Stock::create([
             'generic_name' => 'Amoxicillin',
             'brand_name' => 'Amoxil',
-            'quantity' => 10,
-            'purchase_price' => 5000.0,
             'dosage' => 'Capsules',
             'strength' => '500mg',
-            'expiry_date' => '2021-12-01'
         ]);
     }
 }

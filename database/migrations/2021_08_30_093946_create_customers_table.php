@@ -18,8 +18,8 @@ class CreateCustomersTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('profile_image')->nullable();
-            $table->enum('sex', ['MALE', 'FEMALE'])->nullable();
-            $table->date('dob')->nullable();
+            $table->enum('sex', ['MALE', 'FEMALE']);
+            $table->date('dob');
             $table->timestamps();
         });
     }

@@ -68,6 +68,6 @@ class User extends Authenticatable
     }
 
     public function insuranceCompanyManaged(){
-        return $this->hasMany(InsuranceCompany::class);
+        return $this->hasOne(InsuranceCompany::class);
     }
 }
