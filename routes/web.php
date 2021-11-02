@@ -103,6 +103,8 @@ Route::middleware('auth')->group(function () {
 
         Route::get('prescriptions',[AdminDashboardController::class,'displayPrescriptions']);
 
+        Route::get('prescription/tracking/{id}',[PrescriptionController::class,'tracking']);
+
         Route::get('insurers',[AdminDashboardController::class,'getInsurers']);
         Route::get('doctors',[AdminDashboardController::class,'getDoctors']);
 

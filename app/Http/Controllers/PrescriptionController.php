@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\PrescriptionDetails;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Prescription;
+use App\Models\Delivery;
 
 class PrescriptionController extends Controller
 {
@@ -26,4 +28,17 @@ class PrescriptionController extends Controller
 
         return \redirect('/dashboard/insurer/prescription/'. $request->id);
     }
+
+    public function tracking($id){
+        $checkIfTrackingExists = Delivery::where('prescription_id', $id)->with('prescription')->exists();
+
+        if($checkIfTrackingExists){
+            $tracking = Delivery::where('prescription_id', $id)->with('prescription')->first();
+            return view('/dashboard/admin/delivery-tracking', \compact('tracking'));
+        }
+
+        $tracking = [];
+        return view('/dashboard/admin/delivery-tracking', \compact('tracking'));
+    }
+
 }
