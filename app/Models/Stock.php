@@ -16,4 +16,8 @@ class Stock extends Model
     public function prescription(){
         return $this->hasMany(PrescriptionDetails::class);
     }
+
+    public function batches(){
+        return $this->hasMany(StockBatch::class);
+    }
 }

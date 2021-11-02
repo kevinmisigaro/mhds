@@ -81,6 +81,11 @@ Route::middleware('auth')->group(function () {
         });
         Route::post('store-customer',[AuthController::class,'storeCustomerByInsurer']);
         Route::get('reports', [ReportController::class,'insurer']);
+
+        Route::get('complaints',[InsuranceDashboardController::class,'displayComplaints']);
+        Route::get('complaint-chat/{id}',[InsuranceDashboardController::class,'displayComplaintChat']);
+        Route::post('sendComplaintChat',[InsuranceDashboardController::class,'sendComplaintMessage']);
+
     });
 
     Route::get('company/status/{id}',[CompanyController::class,'updateStatus']);
@@ -113,6 +118,8 @@ Route::middleware('auth')->group(function () {
         Route::post('stock/store',[StockController::class,'store']);
         Route::post('stock/update',[StockController::class,'update']);
         Route::get('stock/status/{id}',[StockController::class,'status']);
+        Route::get('stock/list/{id}',[StockController::class,'stockList']);
+        Route::post('stock/list/create',[StockController::class,'storeStockList']);
     });
     
     Route::get('logout', [AuthController::class, 'logout']);

@@ -30,7 +30,6 @@ Stock
                             <th>S/N</th>
                             <th>Drug</th>
                             <th>Availabity</th>
-                            <th>Price</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -39,7 +38,6 @@ Stock
                             <th>S/N</th>
                             <th>Drug</th>
                             <th>Availabity</th>
-                            <th>Price</th>
                             <th>Action</th>
                         </tr>
                     </tfoot>
@@ -53,18 +51,21 @@ Stock
                                 {{ $item->generic_name }}
                             </td>
                             <td>
-                                @if ($item->quantity > 0)
-                                <span class="badge badge-pill badge-success p-2">
-                                    In Stock
-                                </span>
+                                @if ($item->batches->last())
+                                    @if ($item->batches->last()->in_stock)
+                                    <span class="badge badge-pill badge-success px-4 py-2">
+                                        In Stock
+                                    </span>
+                                    @else
+                                    <span class="badge badge-pill badge-danger px-3 py-2">
+                                        No Stock
+                                    </span>
+                                    @endif
                                 @else
                                 <span class="badge badge-pill badge-danger px-3 py-2">
-                                    No Stock
+                                    Not in Stock
                                 </span>
                                 @endif
-                            </td>
-                            <td>
-                                {{ $item->purchase_price }}
                             </td>
                             <td>
                                 <div class="dropright">
@@ -77,15 +78,17 @@ Stock
                                             data-target="#viewModal{{ $item->id }}">Details</a>
                                         <a class="dropdown-item" href="#" data-toggle="modal"
                                             data-target="#editModal{{ $item->id }}">Edit</a>
-                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#statusModal{{ $item->id }}">Status</a>
+                                        <a class="dropdown-item" href="#" data-toggle="modal"
+                                            data-target="#statusModal{{ $item->id }}">Status</a>
+                                        <a class="dropdown-item" 
+                                        href="/dashboard/admin/stock/list/{{ $item->id }}">Stock List</a>
                                     </div>
                                 </div>
                             </td>
                         </tr>
 
                         <!-- Status Modal -->
-                        <div class="modal fade" id="statusModal{{ $item->id }}" tabindex="-1"
-                            aria-hidden="true">
+                        <div class="modal fade" id="statusModal{{ $item->id }}" tabindex="-1" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -97,15 +100,15 @@ Stock
                                         </button>
                                     </div>
                                     <div class="modal-body text-center">
-                                        
+
                                         @if ($item->status)
-                                            <a href="/dashboard/admin/stock/status/{{ $item->id }}" class="btn btn-danger">
-                                                Deactivate
-                                            </a>
+                                        <a href="/dashboard/admin/stock/status/{{ $item->id }}" class="btn btn-danger">
+                                            Deactivate
+                                        </a>
                                         @else
-                                            <a href="/dashboard/admin/stock/status/{{ $item->id }}" class="btn btn-success">
-                                                Activate
-                                            </a>
+                                        <a href="/dashboard/admin/stock/status/{{ $item->id }}" class="btn btn-success">
+                                            Activate
+                                        </a>
                                         @endif
                                     </div>
                                 </div>
@@ -145,18 +148,6 @@ Stock
                                                 </div>
 
                                                 <div class="col-md-6 mb-3">
-                                                    <label for="">Quantity</label>
-                                                    <input type="number" name="quantity" value="{{ $item->quantity }}"
-                                                        class="form-control">
-                                                </div>
-
-                                                <div class="col-md-6 mb-3">
-                                                    <label for="">Purchase Price</label>
-                                                    <input type="text" name="price" value="{{ $item->purchase_price }}"
-                                                        class="form-control">
-                                                </div>
-
-                                                <div class="col-md-6 mb-3">
                                                     <label for="">Dosage</label>
                                                     <input type="text" name="dosage" value="{{ $item->dosage }}"
                                                         class="form-control">
@@ -168,11 +159,6 @@ Stock
                                                         class="form-control">
                                                 </div>
 
-                                                <div class="col-md-6 mb-3">
-                                                    <label for="">Expiry Date</label>
-                                                    <input type="date" name="date" value="{{ $item->expiry_date }}"
-                                                        class="form-control">
-                                                </div>
                                             </div>
 
                                             <div>
@@ -216,18 +202,6 @@ Stock
                                         </div>
 
                                         <div class="col-md-6 mb-3">
-                                            <label for="">Quantity</label>
-                                            <input type="text" disabled value="{{ $item->quantity }}"
-                                                class="form-control">
-                                        </div>
-
-                                        <div class="col-md-6 mb-3">
-                                            <label for="">Purchase Price</label>
-                                            <input type="text" disabled value="{{ $item->purchase_price }}"
-                                                class="form-control">
-                                        </div>
-
-                                        <div class="col-md-6 mb-3">
                                             <label for="">Dosage</label>
                                             <input type="text" disabled value="{{ $item->dosage }}"
                                                 class="form-control">
@@ -236,12 +210,6 @@ Stock
                                         <div class="col-md-6 mb-3">
                                             <label for="">Strength</label>
                                             <input type="text" disabled value="{{ $item->strength }}"
-                                                class="form-control">
-                                        </div>
-
-                                        <div class="col-md-6 mb-3">
-                                            <label for="">Expiry Date</label>
-                                            <input type="text" disabled value="{{ $item->expiry_date }}"
                                                 class="form-control">
                                         </div>
 

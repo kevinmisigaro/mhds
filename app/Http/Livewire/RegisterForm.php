@@ -89,11 +89,10 @@ class RegisterForm extends Component
 
         } catch (\Exception $e){
             DB::rollback();
-            dd($e);
+            // dd($e);
             // return \redirect()->back();
+            session()->flash('error', 'Failed to save user.');
         }
-
-        
     }
 
     public function mount(){

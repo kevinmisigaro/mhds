@@ -18,6 +18,7 @@
         <div class="form-group mb-2">
             <label for="">Complaint Type</label>
             <select wire:model="type" class="form-control">
+                <option value="">Select option</option>
                 <option value="1">
                     To Insurer
                 </option>

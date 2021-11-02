@@ -1,5 +1,9 @@
 <div>
-
+    @if (session()->has('message'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ session('message') }}
+    </div>
+    @endif
     <h1 class="h3 mb-2 text-gray-800">Prescriptions details</h1>
 
     <div class="my-4">
@@ -52,7 +56,70 @@
 
             </tbody>
         </table>
-        <br>
+
+        @if (\Illuminate\Support\Facades\Auth::user()->role == 'insurer')
+        <div class="my-3">
+            <button class="btn btn-info ml-2" data-toggle="modal" data-target="#approve" style="margin-top: 32px">
+                Approve
+            </button>
+            <button class="btn btn-danger ml-2" data-toggle="modal" data-target="#reject" style="margin-top: 32px;">
+                Reject
+            </button>
+        </div>
+
+        <!-- Insurer Reject Modal -->
+        <div wire:ignore.self class="modal fade" id="reject" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            Reject with comment
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group mb-2">
+                                <textarea class="form-control" wire:model="comment" cols="100%" rows="5"></textarea>
+                                <button class="btn btn-danger" wire:click.prevent="insurerReject()" style="margin-top: 32px">
+                                    Reject
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Insurer Approve Modal -->
+        <div wire:ignore.self class="modal fade" id="approve" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            Approve with comment
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group mb-2">
+                                <textarea class="form-control" wire:model="comment" cols="100%" rows="5"></textarea>
+                                <button class="btn btn-success" wire:click.prevent="insurerApprove()" style="margin-top: 32px">
+                                    Approve
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
+
         @if (\Illuminate\Support\Facades\Auth::user()->role == 'admin')
         <div class="my-3">
             <form wire:submit.prevent="submit">
@@ -60,11 +127,11 @@
                     <div class="col-md-4">
                         <label>Drug</label>
                         <select wire:model="drug" class="form-control">
-                            <option value="" disabled selected>Select drug</option>
+                            <option value="">Select drug</option>
                             @foreach ($stock as $item)
-                                <option value="{{ $item->id }}">
-                                    {{ $item->generic_name }} ({{ $item->brand_name }})
-                                </option>
+                            <option value="{{ $item->id }}">
+                                {{ $item->generic_name }} ({{ $item->brand_name }})
+                            </option>
                             @endforeach
                         </select>
                     </div>
@@ -83,24 +150,15 @@
                         <button class="btn btn-info ml-2" type="button" wire:click="approve" style="margin-top: 32px">
                             Approve
                         </button>
-                        <button class="btn btn-danger ml-2" type="button" wire:click="disapprove" style="margin-top: 32px;">
-                            Disapprove
+                        <button class="btn btn-danger ml-2" type="button" wire:click="disapprove"
+                            style="margin-top: 32px;">
+                            Reject
                         </button>
+
                     </div>
                 </div>
             </form>
-        </div> 
-        @endif
-
-        @if (\Illuminate\Support\Facades\Auth::user()->role == 'insurer')
-            <div class="mb-3">
-                <button class="btn btn-info" type="button" wire:click="approve" style="margin-top: 32px">
-                    Approve
-                </button>
-                <button class="btn btn-danger ml-2" type="button" wire:click="disapprove" style="margin-top: 32px;">
-                    Disapprove
-                </button>
-            </div>
+        </div>
         @endif
 
         <img src="{{ env('APP_URL') }}{{ $prescription->image }}" alt="..." style="height: 500px">
@@ -108,5 +166,3 @@
     </div>
 
 </div>
-
-

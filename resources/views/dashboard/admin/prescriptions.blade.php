@@ -38,7 +38,7 @@
                                 {{ $prescription->patient->name }}
                             </td>
                             <td>
-                                @if ($prescription->approved_by_manager)
+                                @if ($prescription->approved_by_admin)
                                 <span class="badge rounded-pill text-white px-3 py-2 bg-success">Approved</span>
                                 @else
                                 <span class="badge rounded-pill text-white px-3 py-2 bg-danger">Unapproved</span>

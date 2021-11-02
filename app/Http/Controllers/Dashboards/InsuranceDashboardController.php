@@ -10,7 +10,9 @@ use App\Models\Prescription;
 use App\Models\PrescriptionDetails;
 use Illuminate\Support\Facades\Auth;
 use App\Models\InsuranceCard;
+use App\Models\ComplaintConversation;
 use App\Models\Stock;
+use App\Models\Complaint;
 
 class InsuranceDashboardController extends Controller
 {
@@ -23,8 +25,39 @@ class InsuranceDashboardController extends Controller
         return view('dashboard.home',\compact('prescriptions', 'cards'));
     }
 
+    public function displayComplaints(){
+        $complaints = Complaint::where('complaint_type', 1)->with('complainerDetails')->get();
+        return view('dashboard.insurer.complaints',\compact('complaints'));
+    }
+
+    public function displayComplaintChat($id){
+        $conversation = ComplaintConversation::where('complaint_id',$id)->get();
+
+        $convoId = ComplaintConversation::where('complaint_id',$id)->pluck('id')->first(); 
+
+        $complaint = Complaint::where('id',$id)->first();
+
+        return view('dashboard.insurer.complaint-chat',\compact('conversation','convoId','complaint'));
+    }
+
+    public function sendComplaintMessage(Request $request){
+
+        $sampleconvo = ComplaintConversation::where('id',$request->convoId)->first(); 
+
+        $convo = new ComplaintConversation;
+        $convo->complaint_id = $sampleconvo->complaint_id;
+        $convo->sender_id = Auth::user()->id;
+        $convo->sender_is_read = false;
+        $convo->reciever_is_read = true;
+        $convo->message = $request->message;
+
+        if($convo->save()){
+            return \redirect()->back();
+        }
+    }
+
     public function displayPrescriptions(){
-        $prescriptions = Prescription::with('patient')->get();
+        $prescriptions = Prescription::where('approved_by_admin',true)->with('patient')->get();
         return view('dashboard.insurer.prescriptions',\compact('prescriptions'));
     }
 

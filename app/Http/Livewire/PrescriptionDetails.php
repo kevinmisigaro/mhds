@@ -3,11 +3,14 @@
 namespace App\Http\Livewire;
 
 use App\Models\Stock;
+use App\Models\StockBatch;
 use Livewire\Component;
 use App\Models\Prescription;
 use App\Models\ProfitMargin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\PrescriptionDetails as Details;
+use App\Models\Delivery;
 
 class PrescriptionDetails extends Component
 {
@@ -17,10 +20,11 @@ class PrescriptionDetails extends Component
     public $drug;
     public $price;
     public $quantity;
+    public $comment;
 
     public function mount($id){
         $this->prescription = Prescription::where('id', $id)->with(['patient','card'])->first();
-        $this->stock = Stock::where('status', true)->get();
+        $this->stock = Stock::has('batches')->get();
     }
 
     protected $rules = [
@@ -35,7 +39,9 @@ class PrescriptionDetails extends Component
 
         $margin = ProfitMargin::where('company_id', $this->prescription->card->company_id)->first();
 
-        $this->price = $value->purchase_price * $margin->margin;
+        $batch = StockBatch::where('stock_id', $value->id)->orderBy('created_at', 'desc')->first();
+
+        $this->price = $batch->purchase_price * $margin->margin;
     }
 
     public function submit()
@@ -45,55 +51,75 @@ class PrescriptionDetails extends Component
         DB::beginTransaction();
 
         try{
-            $p = new \App\Models\PrescriptionDetails;
+            $p = new Details;
             $p->prescription_id = $this->prescription->id;
             $p->drug_id = $this->drug;
             $p->selling_price = $this->price;
-            $p->quantity = $this->quantity;
+            $p->quantity = (int)$this->quantity;
             $p->save();
 
-            $currentStock = Stock::where('id', $this->drug)->first();
-            $currentStock->quantity = $currentStock->quantity - $this->quantity;
+            $currentStock = StockBatch::where('stock_id', $p->drug_id)->first();
+            $currentStock->quantity = $currentStock->quantity - (int)$this->quantity;
+
+            if($currentStock->quantity < 0){
+                return session()->flash('message', 'Please reduce quantity');
+            }
             $currentStock->save();
+             
+            DB::commit();
 
         } catch (\Exception $e){
             DB::rollback();
-            dd($e);
-            // return \redirect()->back();
+            return session()->flash('message', 'An error has occurred');
         }
 
+    }
+
+    public function insurerReject(){
+        $this->prescription->update([
+            'approved_by_insurer' => false,
+            'insurance_comment' => $this->comment
+        ]); 
+
+        return \redirect('/dashboard/insurer/prescriptions');
+    }
+
+    public function insurerApprove(){
+        $this->prescription->update([
+            'approved_by_insurer' => true,
+            'insurance_comment' => $this->comment
+        ]); 
+
+        $values = Details::where('prescription_id', $this->prescription->id)->get();
+        
+        $actualAmount = 0;
+
+        foreach ($values as $key => $value) {
+            $actualAmount = $actualAmount + ( $value->selling_price * $value->quantity );
+        }
+
+        Delivery::create([
+            'prescription_id' => $this->prescription->id,
+            'total_amount' => $actualAmount,
+            'approved_amount' => $actualAmount
+        ]);
+
+        return \redirect('/dashboard/insurer/prescriptions');
     }
 
     public function approve(){
 
-        if(Auth::user()->role == 'admin'){
-            $this->prescription->update([
-                'approved_by_manager' => true
-            ]); 
-        }
-
-        if(Auth::user()->role == 'insurer'){
-            $this->prescription->update([
-                'approved_by_insurer' => true
-            ]); 
-        }
+        $this->prescription->update([
+            'approved_by_admin' => true
+        ]); 
 
         return \redirect('/dashboard/admin/prescriptions');
     }
 
-
     public function disapprove(){
-        if(Auth::user()->role == 'admin'){
-            $this->prescription->update([
-                'approved_by_manager' => false
-            ]); 
-        }
-
-        if(Auth::user()->role == 'insurer'){
-            $this->prescription->update([
-                'approved_by_insurer' => false
-            ]); 
-        } 
+        $this->prescription->update([
+            'approved_by_admin' => false
+        ]); 
 
         return \redirect('/dashboard/admin/prescriptions');
     }

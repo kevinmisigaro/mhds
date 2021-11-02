@@ -30,6 +30,10 @@ class Prescription extends Model
         
     }
 
+    public function deliveries(){
+        return $this->hasMany(Delivery::class);
+    }
+
     public function managerApproved(){
         return $this->belongsTo(User::class,'manager_id','id');
     }
