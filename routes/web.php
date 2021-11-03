@@ -43,6 +43,16 @@ Route::get('/terms', function(){
 
 Route::middleware('auth')->group(function () {
 
+    Route::prefix('prescription')->group(function(){
+
+        Route::get('dispatch/{id}',[PrescriptionController::class,'dispatchPrescription']);
+        Route::get('invoice/{id}',[PrescriptionController::class, 'invoice']);
+        Route::get('customerAccept/{id}', [PrescriptionController::class, 'deliveryAcceptance']);
+        Route::get('paymentProcess/{id}', [PrescriptionController::class, 'processPayment']);
+        Route::get('confirmPayment/{id}',[PrescriptionController::class,'confirmPayment']);
+        
+    });
+
     Route::prefix('dashboard/customer')->group(function () {
         Route::get('home', [CustomerDashboardController::class,'index']);
 

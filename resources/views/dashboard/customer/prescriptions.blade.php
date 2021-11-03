@@ -44,7 +44,7 @@ Prescriptions
                             {{ $loop->iteration }}
                         </td>
                         <td>
-                            @if ($prescription->approved_by_manager)
+                            @if ($prescription->approved_by_admin)
                             <span class="badge rounded-pill text-white px-3 py-2 bg-success">Approved</span>
                             @else
                             <span class="badge rounded-pill text-white px-3 py-2 bg-danger">Unapproved</span>
@@ -61,9 +61,9 @@ Prescriptions
                             {{ $prescription->created_at }}
                         </td>
                         <td>
-                            <button class="btn btn-info text-white">
-                                View
-                            </button>
+                            @if ($prescription->approved_by_insurer)
+                            <a href="/dashboard/admin/prescription/tracking/{{ $prescription->id }}" class="btn btn-info text-white">Delivery tracking</a>
+                            @endif
                         </td>
                     </tr>
                     @endforeach

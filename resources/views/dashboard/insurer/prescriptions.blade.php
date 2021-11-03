@@ -61,7 +61,9 @@ Prescriptions
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item"
                                     href="/dashboard/insurer/prescription/{{ $prescription->id }}">Details</a>
-                                <a href="/dashboard/admin/prescription/tracking/{{ $prescription->id }}" class="dropdown-item">Delivery tracking</a>
+                                    @if ($prescription->approved_by_insurer)
+                                    <a href="/dashboard/admin/prescription/tracking/{{ $prescription->id }}" class="dropdown-item">Delivery tracking</a>
+                                    @endif
                             </div>
                         </td>
                     </tr>
