@@ -101,7 +101,7 @@
 <footer>
     <div class="footer">
         <small class="text-center">
-            2021. MDHS.
+            {{ date("Y") }} | {{ env('APP_NAME') }}
         </small>
     </div>
 </footer>
