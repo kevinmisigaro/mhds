@@ -11,7 +11,7 @@ class InsuranceCompany extends Model
 
     protected $table = "insurance_companies";
 
-    public $fillable = ['active'];
+    public $fillable = ['active', 'company_name', 'manager_id'];
 
     public function cards(){
         return $this->hasMany(InsuranceCard::class);

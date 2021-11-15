@@ -10,7 +10,7 @@ class Customer extends Model
     use HasFactory;
 
     public $fillable = [
-        'sex','dob', 'profile_image'
+        'sex','dob', 'profile_image','user_id'
     ];
 
     public function user(){

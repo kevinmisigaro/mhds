@@ -3,12 +3,126 @@
         Customers
     @endslot
 
+    @if (session()->has('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+    </div>
+    @endif
+
+    @if (session()->has('fail'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('fail') }}
+    </div>
+    @endif
+
 <!-- Page Heading -->
 <h1 class="h3 mb-2 text-gray-800">Customers</h1>
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-header py-3">
+        <button class="btn btn-primary" data-toggle="modal" data-target="#newCustomerModal">
+            New customer
+        </button>
     </div>
+
+    <!-- New Customer Modal -->
+<div class="modal fade" id="newCustomerModal" tabindex="-1" aria-labelledby="newCustomerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="newCustomerModalLabel">Register user</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="/dashboard/admin/customer/store" method="POST">
+            @csrf
+            <small>Personal details</small>
+              <div class="row mb-2">
+                  <div class="col-md-6">
+                    <label for="">Name</label>
+                    <input type="text" name="name" class="form-control">
+                  </div>
+                  <div class="col-md-6">
+                      <label for="">Email</label>
+                      <input type="text" name="email" class="form-control">
+                  </div>
+              </div>
+
+              <div class="row mb-2">
+                <div class="col-md-6">
+                  <label>Sex</label>
+                  <select name="sex" class="form-control">
+                      <option value="">Select gender</option>
+                      <option value="MALE">Male</option>
+                      <option value="FEMALE">Female</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="">Date</label>
+                    <input type="date" name="dob" class="form-control">
+                </div>
+            </div>    
+
+            <div class="row mb-2">
+                <div class="col-md-6">
+                  <label for="">Password</label>
+                  <input type="password" name="password" class="form-control">
+                </div>
+                <div class="col-md-6">
+                    <label for="">Confirm Password</label>
+                  <input type="password" name="confirmpassword" class="form-control">
+                </div>
+            </div>  
+
+            <div class="mt-3">
+                <small>Insuarance card details</small>
+            </div>
+            
+            <div class="row mb-2">
+                <div class="col-md-6">
+                  <label for="">Company</label>
+                  <select name="company" class="form-control">
+                      <option value="">Select company</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="">Card number</label>
+                  <input type="text" name="card" class="form-control">
+                </div>
+            </div> 
+
+            <div class="row mb-2">
+                <div class="col-md-6">
+                  <label for="">Card image</label>
+                  <input type="file" name="image" class="form-control">
+                </div>
+                <div class="col-md-6">
+                    <label for="">Issue date</label>
+                  <input type="date" name="issuedate" class="form-control">
+                </div>
+            </div> 
+
+            <div class="row mb-2">
+                <div class="col-md-6">
+                  <label for="">Expiry date </label>
+                  <input type="date" name="expirydate" class="form-control">
+                </div>
+            </div>
+            
+            <div class="text-center mt-3">
+                <button type="submit" class="btn btn-success">
+                    Register
+                </button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">

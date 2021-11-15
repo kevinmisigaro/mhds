@@ -34,7 +34,7 @@
                     <div class="col-md-6">
                         <label for="">Sex</label>
                         <select wire:model="sex" class="form-control">
-                            <option value="" selected disabled>Select gender</option>
+                            <option value="">Select gender</option>
                             <option value="MALE">Male</option>
                             <option value="FEMALE">Female</option>
                         </select>

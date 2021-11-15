@@ -18,6 +18,114 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
+    public function adminRegisterInsurer(Request $request){
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|unique:users,email',
+            'company' => 'required|unique:insurance_companies,company_name',
+            'password' => 'required',
+            'confirmpassword' => 'required',
+            'company' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            \session()->flash('fail', 'Please fill in all the details');
+        }
+
+        DB::beginTransaction();
+
+        try{
+
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+            ]);
+
+            $company = InsuranceCompany::create([
+                'manager_id' => $user->id,
+                'company_name' => $request->company,
+                'active' => true
+            ]);
+
+            DB::commit();
+            \session()->flash('success', 'Insurer registered');
+
+            return \redirect()->back();
+
+        } catch (\Exception $e){
+            DB::rollback();
+
+            session()->flash('fail', 'Insurer failed to save');
+            return \redirect()->back();
+        }
+        
+    }
+
+    public function adminRegisterUser(Request $request){
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|unique:users,email',
+            'company' => 'required|unique:insurance_companies,company_name',
+            'password' => 'required',
+            'confirmpassword' => 'required',
+            'sex' => 'required',
+            'dob' => 'required',
+            'company' => 'required',
+            'card' => 'required',
+            'image' => 'image',
+            'issuedate' => 'date',
+            'expirydate' => 'date'
+        ]);
+
+        if ($validator->fails()) {
+            \session()->flash('fail', 'Please fill in all the details');
+        }
+
+        DB::beginTransaction();
+
+        try{
+
+            $user = new User;
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = Hash::make($request->password);
+            $user->role = 'customer';
+            $user->save();
+
+            $customer = Customer::create([
+                'sex' => $request->sex,
+                'dob' => $request->dob,
+                'user_id' => $user->id
+            ]);
+
+            $path = $request->file('image')->store('cards');
+
+            $card = InsuranceCard::create([
+                'insurance_number' => $request->card,
+                'company_id' => $request->company,
+                'type' => 'Health',
+                'image' => $path,
+                'valid' => true,
+                'expiry_date' => $request->expirydate,
+                'issue_date' => $request->issuedate,
+                'owner_id' => $user->id
+            ]);
+            
+            DB::commit();
+            \session()->flash('success', 'Customer saved');
+
+            return \redirect()->back();
+
+        } catch (\Exception $e){
+            DB::rollback();
+
+            session()->flash('fail', 'Customer failed to save');
+            return \redirect()->back();
+        }
+
+    }
+
     public function company(Request $request){
         $validator = Validator::make($request->all(), [
             'name' => 'required',
