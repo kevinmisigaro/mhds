@@ -26,7 +26,7 @@ class InsuranceDashboardController extends Controller
     }
 
     public function displayComplaints(){
-        $complaints = Complaint::where('complaint_type', 1)->with('complainerDetails')->get();
+        $complaints = Complaint::where('complaint_type', 2)->with('complainerDetails')->get();
         return view('dashboard.insurer.complaints',\compact('complaints'));
     }
 

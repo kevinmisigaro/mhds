@@ -23,8 +23,6 @@ class AuthController extends Controller
             'name' => 'required',
             'email' => 'required|unique:users,email',
             'company' => 'required|unique:insurance_companies,company_name',
-            'password' => 'required',
-            'confirmpassword' => 'required',
             'company' => 'required',
         ]);
 
@@ -39,7 +37,8 @@ class AuthController extends Controller
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => Hash::make($request->password),
+                'password' => Hash::make('123456'),
+                'role' => 'insurer'
             ]);
 
             $company = InsuranceCompany::create([
@@ -55,7 +54,6 @@ class AuthController extends Controller
 
         } catch (\Exception $e){
             DB::rollback();
-
             session()->flash('fail', 'Insurer failed to save');
             return \redirect()->back();
         }
@@ -65,47 +63,59 @@ class AuthController extends Controller
     public function adminRegisterUser(Request $request){
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'email' => 'required|unique:users,email',
+            'email' => 'required|email|unique:users,email',
             'company' => 'required|unique:insurance_companies,company_name',
-            'password' => 'required',
-            'confirmpassword' => 'required',
             'sex' => 'required',
             'dob' => 'required',
             'company' => 'required',
             'card' => 'required',
             'image' => 'image',
             'issuedate' => 'date',
-            'expirydate' => 'date'
+            'expirydate' => 'date',
+            'avatar' => 'required',
+            'phone' => 'required'
         ]);
 
-        if ($validator->fails()) {
-            \session()->flash('fail', 'Please fill in all the details');
-        }
+        // if ($validator->fails()) {
+        //     \session()->flash('fail', 'Please fill in all the details');
+        //     return redirect()->back();
+        // }
 
         DB::beginTransaction();
 
         try{
 
-            $user = new User;
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->password = Hash::make($request->password);
-            $user->role = 'customer';
-            $user->save();
-
-            $customer = Customer::create([
-                'sex' => $request->sex,
-                'dob' => $request->dob,
-                'user_id' => $user->id
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make('123456'),
+                'role' => 'customer',
+                'phone' => $request->phone
             ]);
 
-            $path = $request->file('image')->store('cards');
+            $avatarPath = '';
+            $path = '';
+
+            if($request->hasFile('avatar')){
+                $avatarPath = $request->file('avatar')->store('avatars','public');
+            }
+    
+            $customer = Customer::create([
+                'user_id' => $user->id,
+                'sex' => $request->sex,
+                'dob' => $request->dob,
+                'profile_image' => '/storage/'.$avatarPath
+            ]);
+
+            if($request->hasFile('image')){
+                $path = $request->file('image')->store('cards');
+            }
 
             $card = InsuranceCard::create([
                 'insurance_number' => $request->card,
                 'company_id' => $request->company,
                 'type' => 'Health',
-                'image' => $path,
+                'image' => '/storage/'.$path,
                 'valid' => true,
                 'expiry_date' => $request->expirydate,
                 'issue_date' => $request->issuedate,
@@ -119,7 +129,6 @@ class AuthController extends Controller
 
         } catch (\Exception $e){
             DB::rollback();
-
             session()->flash('fail', 'Customer failed to save');
             return \redirect()->back();
         }
@@ -132,7 +141,7 @@ class AuthController extends Controller
             'email' => 'required|unique:users,email',
             'company' => 'required|unique:insurance_companies,company_name',
             'pass' => 'required',
-            'confirmpass' => 'required'
+            'confirmpass' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -168,53 +177,73 @@ class AuthController extends Controller
     }
 
     public function storeCustomerByInsurer(Request $request){
+
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'email' => 'required|email|unique:users, email',
+            'email' => 'required|email',
             'card' => 'required',
-            'type' => 'required',
             'image' => 'required|image',
             'sex' => 'required',
-            'dob' => 'required'
+            'dob' => 'required',
+            'avatar' => 'required',
+            'edate' => 'required',
+            'idate' => 'required'
         ]);
 
-        if ($validator->fails()) {
-            return redirect()->back();
-        }
+        // if ($validator->fails()) {
+        //     \session()->flash('fail','Please fill in all details');
+        //     return redirect()->back();
+        // }
 
         DB::beginTransaction();
 
         try{
-            $user = new User;
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->password = Hash::make('123456');
-            $user->save();
 
-            $customer = new Customer;
-            $customer->user_id = $user->id;
-            $customer->sex = $request->sex;
-            $customer->dob = $request->dob;
-            $customer->save();
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make('123456'),
+                'phone' => $request->phone
+            ]);
 
-            $path = $request->file('image')->store('avatars','public');
 
-            $card = new InsuranceCard;
-            $card->insurance_number = $request->card;
-            $card->owner_id = $user->id;
-            $card->company_id = Auth::user()->insuranceCompanyManaged->id;
-            $card->type = $request->type;
-            $card->valid = true;
-            $card->image = '/storage/'.$path;
-            $card->save();
-
+            $avatarPath = '';
+            $path = '';
+    
+            if($request->hasFile('avatar')){
+                $avatarPath = $request->file('avatar')->store('avatars','public');
+            }
+    
+            $customer = Customer::create([
+                'user_id' => $user->id,
+                'sex' => $request->sex,
+                'dob' => $request->dob,
+                'profile_image' => '/storage/'.$avatarPath
+            ]);
+    
+            if($request->hasFile('image')){
+                $path = $request->file('image')->store('cards','public');
+            }
+    
+            $card = InsuranceCard::create([
+                'insurance_number' => $request->card,
+                'owner_id' => $user->id,
+                'company_id' => Auth::user()->insuranceCompanyManaged->id,
+                'type' => 'Health',
+                'valid' => true,
+                'image' => '/storage/'.$path,
+                'expiry_date' => $request->edate,
+                'issue_date' => $request->idate
+             ]);
+            
             DB::commit();
 
             return \redirect('/dashboard/insurer/customers');
 
         } catch (\Exception $e){
             DB::rollback();
-            dd($e);
+            session()->flash('fail','An error occured');
+            return \redirect()->back();
         }
 
     }
@@ -228,7 +257,9 @@ class AuthController extends Controller
             return redirect()->back();
         }
 
-        $path = $request->file('avatar')->store('avatars','public');
+        if($request->hasFile('avatar')){
+            $path = $request->file('avatar')->store('avatars','public');
+        }
 
         $customer = $customer = Customer::where('user_id', Auth::id())->first();
 

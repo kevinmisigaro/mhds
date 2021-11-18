@@ -27,7 +27,8 @@ class AdminDashboardController extends Controller
 
     public function getCustomers(){
         $customers = User::where('role','customer')->with('customer')->get();
-        return view('dashboard.admin.customers',\compact('customers'));
+        $companies = InsuranceCompany::get();
+        return view('dashboard.admin.customers',\compact('customers','companies'));
     }
 
     public function displayCustomerDetails($id){
@@ -41,7 +42,7 @@ class AdminDashboardController extends Controller
     }
 
     public function getInsurers(){
-        $insurers = User::where('role','insurer')->get();
+        $insurers = User::where('role','insurer')->with('insuranceCompanyManaged')->get();
         return view('dashboard.admin.insurers',\compact('insurers'));
     }
 
@@ -56,7 +57,7 @@ class AdminDashboardController extends Controller
     }
 
     public function displayComplaints(){
-        $complaints = Complaint::where('complaint_type', 2)->with('complainerDetails')->get();
+        $complaints = Complaint::where('complaint_type', 1)->with('complainerDetails')->get();
         return view('dashboard.admin.complaints',\compact('complaints'));
     }
 

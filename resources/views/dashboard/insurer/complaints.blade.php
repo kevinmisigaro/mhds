@@ -55,7 +55,7 @@
                             @endif
                         </td>
                         <td>
-                            <a href="/dashboard/admin/complaint-chat/{{ $complaint->id }}" class="btn btn-info text-white">
+                            <a href="/dashboard/insurer/complaint-chat/{{ $complaint->id }}" class="btn btn-info text-white">
                                 View
                             </a>
                         </td>

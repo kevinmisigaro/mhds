@@ -4,7 +4,9 @@
     @if (\Illuminate\Support\Facades\Auth::user()->role == 'customer')
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/dashboard/customer/home">
-        <div class="sidebar-brand-text mx-3">MDHS</div>
+        <div class="sidebar-brand-text mx-3">
+            {{ env('APP_NAME') }}
+        </div>
     </a>
 
     <!-- Divider -->
@@ -46,7 +48,9 @@
     @if (\Illuminate\Support\Facades\Auth::user()->role == 'admin')
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/dashboard/admin/home">
-        <div class="sidebar-brand-text mx-3">MDHS</div>
+        <div class="sidebar-brand-text mx-3">
+            {{ env('APP_NAME') }}
+        </div>
     </a>
 
     <!-- Divider -->
@@ -71,7 +75,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="/dashboard/admin/customers">Customers</a>
                 <a class="collapse-item" href="/dashboard/admin/insurers">Insurers</a>
-                <a class="collapse-item" href="/dashboard/admin/doctors">Doctors</a>
+                {{-- <a class="collapse-item" href="/dashboard/admin/doctors">Doctors</a> --}}
             </div>
         </div>
     </li>
@@ -112,7 +116,9 @@
 
     @if (\Illuminate\Support\Facades\Auth::user()->role == 'insurer')
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/dashboard/insurer/home">
-        <div class="sidebar-brand-text mx-3">MDHS</div>
+        <div class="sidebar-brand-text mx-3">
+            {{ env('APP_NAME') }}
+        </div>
     </a>
 
     <!-- Divider -->
@@ -134,6 +140,12 @@
         <a class="nav-link" href="/dashboard/insurer/prescriptions">
             <i class="far fa-fw fa-comment"></i>
             <span>Prescriptions</span></a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="/dashboard/insurer/complaints">
+            <i class="far fa-fw fa-comment"></i>
+            <span>Complaints</span></a>
     </li>
 
     <li class="nav-item">

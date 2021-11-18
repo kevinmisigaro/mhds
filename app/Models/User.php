@@ -68,6 +68,6 @@ class User extends Authenticatable
     }
 
     public function insuranceCompanyManaged(){
-        return $this->hasOne(InsuranceCompany::class);
+        return $this->hasOne(InsuranceCompany::class,'manager_id','id');
     }
 }
