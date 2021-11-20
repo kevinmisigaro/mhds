@@ -23,7 +23,8 @@ class AuthController extends Controller
             'name' => 'required',
             'email' => 'required|unique:users,email',
             'company' => 'required|unique:insurance_companies,company_name',
-            'company' => 'required',
+            'margin' => 'required',
+
         ]);
 
         if ($validator->fails()) {
@@ -44,7 +45,8 @@ class AuthController extends Controller
             $company = InsuranceCompany::create([
                 'manager_id' => $user->id,
                 'company_name' => $request->company,
-                'active' => true
+                'active' => true,
+                'margin' => (float)$request->margin
             ]);
 
             DB::commit();
@@ -142,10 +144,11 @@ class AuthController extends Controller
             'company' => 'required|unique:insurance_companies,company_name',
             'pass' => 'required',
             'confirmpass' => 'required',
+            'margin' => 'required' 
         ]);
 
         if ($validator->fails()) {
-            //
+            return \redirect()->back();
         }
 
         DB::beginTransaction();
@@ -162,6 +165,7 @@ class AuthController extends Controller
             $company = new InsuranceCompany;
             $company->company_name = $request->company;
             $company->manager_id = $user->id;
+            $company->margin = (float)$request->margin;
             $company->save();
 
             DB::commit();
@@ -172,7 +176,7 @@ class AuthController extends Controller
 
         } catch (\Exception $e){
             DB::rollback();
-            dd($e);
+            return \redirect()->back();
         }
     }
 

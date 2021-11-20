@@ -16,13 +16,15 @@ class InsuranceCompanySeeder extends Seeder
     {
         DB::table('insurance_companies')->insert([
             'company_name' => 'Jubilee',
-            'manager_id' => 1,
-            'active' => true
+            'manager_id' => 2,
+            'active' => true,
+            'margin' => 1.5
         ]);
         DB::table('insurance_companies')->insert([
             'company_name' => 'Alliance',
-            'manager_id' => 2,
-            'active' => true
+            'manager_id' => 3,
+            'active' => true,
+            'margin' => 2
         ]);
     }
 }

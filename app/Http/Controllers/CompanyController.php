@@ -17,14 +17,14 @@ class CompanyController extends Controller
         ]);
 
         if ($validator->fails()) {
-            //on failed
+            return \redirect()->back();
         }
 
-        $margin = ProfitMargin::where('company_id', $request->companyId)->first();
-        $margin->margin = (float)$request->price;
-        $margin->save();
+        $company = InsuranceCompany::where('id', $request->companyId)->update([
+            'margin' => (float)$request->price
+        ]);
 
-        session()->flash('message', 'Selling price for '. $margin->company->company_name .' updated');
+        session()->flash('message', 'Selling price updated');
 
         return \redirect()->back();
     }

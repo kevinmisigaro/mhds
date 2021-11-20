@@ -11,7 +11,7 @@ class InsuranceCompany extends Model
 
     protected $table = "insurance_companies";
 
-    public $fillable = ['active', 'company_name', 'manager_id'];
+    public $fillable = ['active', 'company_name', 'manager_id','margin'];
 
     public function cards(){
         return $this->hasMany(InsuranceCard::class);
@@ -19,9 +19,5 @@ class InsuranceCompany extends Model
 
     public function manager(){
         return $this->belongsTo(User::class,'manager_id','id');
-    }
-
-    public function margin(){
-        return $this->hasOne(ProfitMargin::class,'company_id');
     }
 }

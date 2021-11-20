@@ -161,6 +161,32 @@
         </div>
         @endif
 
+        @if ($prescription->insurance_comment != null)
+
+        <div class="my-3">
+            <div class="card" style="width: 100%">
+                <div class="card-body">
+
+                    @if ($prescription->approved_by_insurer)
+                    <div class="alert alert-success" role="alert">
+                        Approved by insurer
+                      </div>
+                    @else
+                    <div class="alert alert-danger" role="alert">
+                       Rejected by insurer
+                      </div>
+                    @endif
+
+                    <p>
+                        {{ $prescription->insurance_comment }}
+                    </p>
+
+                </div>
+            </div>
+        </div>
+
+        @endif
+        
         <img src="{{ env('APP_URL') }}{{ $prescription->image }}" alt="..." style="height: 500px">
 
     </div>

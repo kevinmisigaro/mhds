@@ -52,7 +52,7 @@ class AdminDashboardController extends Controller
     }
 
     public function displayInsuranceCompanies(){
-        $companies = InsuranceCompany::with('manager','margin')->get();
+        $companies = InsuranceCompany::with('manager')->get();
         return view('dashboard.admin.insurance-companies',\compact('companies'));
     }
 

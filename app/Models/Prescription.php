@@ -11,7 +11,7 @@ class Prescription extends Model
 
     public $fillable = [
         'approved_by_admin', 'approved_by_insurer', 'patient_id', 'image', 'card_id',
-        'delivery_date', 'hospital_name', 'company_id'
+        'delivery_date', 'hospital_name', 'company_id','insurance_comment'
     ];
 
     public function details(){

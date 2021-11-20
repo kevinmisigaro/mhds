@@ -6,7 +6,7 @@ use App\Models\Stock;
 use App\Models\StockBatch;
 use Livewire\Component;
 use App\Models\Prescription;
-use App\Models\ProfitMargin;
+use App\Models\InsuranceCompany;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\PrescriptionDetails as Details;
@@ -21,6 +21,7 @@ class PrescriptionDetails extends Component
     public $price;
     public $quantity;
     public $comment;
+    
 
     public function mount($id){
         $this->prescription = Prescription::where('id', $id)->with(['patient','card'])->first();
@@ -37,11 +38,11 @@ class PrescriptionDetails extends Component
     {
         $value = Stock::where('id', $this->drug)->first();
 
-        $margin = ProfitMargin::where('company_id', $this->prescription->card->company_id)->first();
+        $margin = InsuranceCompany::where('id', $this->prescription->card->company_id)->pluck('margin')->first();
 
         $batch = StockBatch::where('stock_id', $value->id)->orderBy('created_at', 'desc')->first();
 
-        $this->price = $batch->purchase_price * $margin->margin;
+        $this->price = $batch->purchase_price * $margin;
     }
 
     public function submit()

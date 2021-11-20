@@ -58,6 +58,11 @@ Insurers
                                 <label for="">Company name</label>
                                 <input type="text" name="company" class="form-control">
                             </div>
+                            <div class="col-md-6">
+                                <label for="">Profit Margin</label>
+                                <input type="text" name="margin" class="form-control">
+                                <small>Should be decimal</small>
+                            </div>
                         </div>
 
                         <button type="submit" class="btn btn-success mb-2">
@@ -135,6 +140,11 @@ Insurers
                                         <label for="">Company</label>
                                         <input type="text" 
                                         value="{{ \App\Models\InsuranceCompany::where('manager_id', $insurer->id)->pluck('company_name')->first() }}" class="form-control" disabled>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="">Profit margin</label>
+                                        <input type="text" 
+                                        value="{{ \App\Models\InsuranceCompany::where('manager_id', $insurer->id)->pluck('margin')->first() }}" class="form-control" disabled>
                                     </div>
                                 </div>
                             </form>

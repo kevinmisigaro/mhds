@@ -81,7 +81,7 @@ Stock
                                         <a class="dropdown-item" href="#" data-toggle="modal"
                                             data-target="#statusModal{{ $item->id }}">Status</a>
                                         <a class="dropdown-item" 
-                                        href="/dashboard/admin/stock/list/{{ $item->id }}">Stock List</a>
+                                        href="/dashboard/admin/stock/list/{{ $item->id }}">Add Stock</a>
                                     </div>
                                 </div>
                             </td>

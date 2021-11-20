@@ -38,6 +38,11 @@
                 <label for="">Company Name</label>
                 <input type="text" name="company" class="form-control" autocomplete="off">
             </div>
+            <div class="form-group col-md-6">
+                <label for="">Profit margin</label>
+                <input type="text" name="margin" class="form-control" autocomplete="off">
+                <small>Should be decimal</small>
+            </div>
         </div>
 
         <div>
