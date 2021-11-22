@@ -35,7 +35,7 @@ class NewCardForm extends Component
         $card->owner_id = Auth::user()->id;
         $card->company_id = $this->company;
         $card->type = 'Health';
-        $card->image = $this->image->store('cards');
+        $card->image = $this->image->store('cards',['disk' => 'public']);
         $card->save();
 
         session()->flash('message', 'Card successfully saved.');

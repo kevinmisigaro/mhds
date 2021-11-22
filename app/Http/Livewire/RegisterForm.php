@@ -76,7 +76,7 @@ class RegisterForm extends Component
             $card->insurance_number = $this->card;
             $card->issue_date = $this->issueDate;
             $card->expiry_date = $this->expiryDate;
-            $card->image = $this->image->store('cards');
+            $card->image = $this->image->store('cards', ['disk' => 'public']);
             $card->save();
 
             // Mail::to($user)->send(new RegistrationConfirm());

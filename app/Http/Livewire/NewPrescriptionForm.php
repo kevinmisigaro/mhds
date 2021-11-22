@@ -49,7 +49,7 @@ class NewPrescriptionForm extends Component
 
         $this->validate();
  
-        $path = $this->photo->store('prescriptions','public');
+        $path = $this->photo->store('prescriptions',['disk' => 'public']);
 
         $prescription = new Prescription;
         $prescription->image = '/storage/'.$path;

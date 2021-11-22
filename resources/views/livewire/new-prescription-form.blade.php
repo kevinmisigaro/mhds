@@ -9,7 +9,7 @@
     </style>
     <h3>New Prescription form</h3>
     <br>
-    <form wire:submit.prevent="submit">
+    <form wire:submit.prevent="submit" enctype="multipart/form-data">
         <div class="form-group mb-2">
             <label>Upload prescription image</label>
             <input type="file" wire:model="photo" class="form-control">

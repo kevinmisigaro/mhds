@@ -10,7 +10,7 @@
     </h3>
     <div class="row">
         <div class="col-md-12">
-            <form wire:submit.prevent="submit">
+            <form wire:submit.prevent="submit" enctype="multipart/form-data">
 
                 <small class="text-muted">Personal details</small>
                 <br><br>
