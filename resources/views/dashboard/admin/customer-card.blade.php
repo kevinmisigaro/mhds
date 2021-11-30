@@ -6,7 +6,7 @@
    <h1 class="h3 mb-2 text-gray-800">Card</h1>
 
    <div class="row">
-       <div class="col-md-7">
+       <div class="col-md-6">
 
         <div class="form-group">
             <label for="">Insuarance number</label>
@@ -38,11 +38,11 @@
         <div class="mt-5">
             @if ($card->valid)
             <a href="/dashboard/admin/customer/disapprovecard/{{ $card->id }}" class="btn btn-danger">
-                Disapprove
+                Revoke card
             </a>
             @else
             <a href="/dashboard/admin/customer/approvecard/{{ $card->id }}" class="btn btn-primary">
-                Approve
+                Approve card
             </a>
             @endif
 
@@ -50,8 +50,11 @@
                 Ignore
             </a>
         </div>
-
+        
        </div>
+       <div class="col-md-6">
+        <img src="{{ env('APP_URL') }}/storage/{{ $card->image }}" style="max-width: 100%">
+    </div>
    </div>
 
 @endcomponent

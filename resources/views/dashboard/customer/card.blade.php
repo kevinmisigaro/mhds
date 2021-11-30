@@ -39,6 +39,9 @@ Card details
                 Edit card
               </a>
         </div>
+        <div class="col-md-6">
+            <img src="{{ env('APP_URL') }}/storage/{{ $card->image }}" style="max-width: 100%">
+        </div>
     </div>
 </div>
 
