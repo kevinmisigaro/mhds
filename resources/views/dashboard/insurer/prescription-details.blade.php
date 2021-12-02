@@ -21,8 +21,11 @@
                     <th scope="col">#</th>
                     <th scope="col">Brand Name</th>
                     <th scope="col">Quantity</th>
-                    <th scope="col">Selling price</th>
+                    <th scope="col">Total</th>
                     <th scope="col">Strength</th>
+                    <th>
+                        Actions
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -41,10 +44,18 @@
                         {{ $item->quantity }}
                     </td>
                     <td>
-                        {{ $item->selling_price }}
+                        {{ $item->selling_price * $item->quantity }}
                     </td>
                     <td>
                         {{ $item->drug->strength }}
+                    </td>
+                    <td>
+                        <a href="#" data-toggle="modal" data-target="#editDrugModal{{ $item->id }}" class="mr-3">
+                            <i class="fas fa-edit" style="color: black"></i>
+                        </a>
+                        <button wire:click="deleteDrug({{$item->id}})" style="border: none">
+                            <i class="fas fa-trash-alt" style="color: black"></i>
+                        </button>
                     </td>
                 </tr>
                 @endforeach
@@ -57,6 +68,44 @@
             </tbody>
         </table>
 
+        <!-- edit drug Modal -->
+<div class="modal fade" id="editDrugModal{{ $item->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit drug</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="/prescription/updateDrugDetails" method="POST">
+              @csrf
+              <div class="form-group mb-3">
+                  <label for="">Drug name</label>
+                  <input type="text" value="{{$item->drug->brand_name}}" disabled class="form-control">
+              </div>
+              <input type="hidden" name="id" value="{{ $item->id }}">
+            <div class="form-group mb-3">
+                <label for="">Selling price</label>
+                <input type="text" value="{{ $item->selling_price }}" name="price" class="form-control">
+            </div>
+            <div class="form-group mb-3">
+                <label for="">Quantity</label>
+                <input type="number" name="quantity" value="{{ $item->quantity }}" name="quantity" class="form-control">
+            </div>
+            <div class="form-group mb-2">
+                <button class="btn btn-warning" type="submit">
+                    Edit
+                </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+        @if (!$prescription->approved_by_insurer)
         @if (\Illuminate\Support\Facades\Auth::user()->role == 'insurer')
         <div class="my-3">
             <button class="btn btn-info ml-2" data-toggle="modal" data-target="#approve" style="margin-top: 32px">
@@ -83,7 +132,8 @@
                         <form>
                             <div class="form-group mb-2">
                                 <textarea class="form-control" wire:model="comment" cols="100%" rows="5"></textarea>
-                                <button class="btn btn-danger" wire:click.prevent="insurerReject()" style="margin-top: 32px">
+                                <button class="btn btn-danger" wire:click.prevent="insurerReject()"
+                                    style="margin-top: 32px">
                                     Reject
                                 </button>
                             </div>
@@ -109,7 +159,8 @@
                         <form>
                             <div class="form-group mb-2">
                                 <textarea class="form-control" wire:model="comment" cols="100%" rows="5"></textarea>
-                                <button class="btn btn-success" wire:click.prevent="insurerApprove()" style="margin-top: 32px">
+                                <button class="btn btn-success" wire:click.prevent="insurerApprove()"
+                                    style="margin-top: 32px">
                                     Approve
                                 </button>
                             </div>
@@ -160,6 +211,7 @@
             </form>
         </div>
         @endif
+        @endif
 
         @if ($prescription->insurance_comment != null)
 
@@ -170,11 +222,11 @@
                     @if ($prescription->approved_by_insurer)
                     <div class="alert alert-success" role="alert">
                         Approved by insurer
-                      </div>
+                    </div>
                     @else
                     <div class="alert alert-danger" role="alert">
-                       Rejected by insurer
-                      </div>
+                        Rejected by insurer
+                    </div>
                     @endif
 
                     <p>
@@ -186,7 +238,7 @@
         </div>
 
         @endif
-        
+
         <img src="{{ env('APP_URL') }}{{ $prescription->image }}" alt="..." style="height: 500px">
 
     </div>

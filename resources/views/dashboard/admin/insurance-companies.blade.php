@@ -155,7 +155,7 @@ Insurance Companies
                                         <div class="form-group mb-3">
                                             <label for="">Selling Price</label>
                                             <input type="text" name="price" class="form-control"
-                                                value="$company->margin">
+                                                value="{{$company->margin}}">
                                         </div>
                                         <input type="hidden" name="companyId" value="{{ $company->id }}">
                                         <div class="form-group">

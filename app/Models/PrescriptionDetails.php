@@ -11,6 +11,8 @@ class PrescriptionDetails extends Model
 
     protected $table = 'prescription_details';
 
+    protected $fillable = ['quantity','selling_price'];
+
     public function prescription(){
         return $this->belongsTo(Prescription::class,'prescription_id','id');
     }

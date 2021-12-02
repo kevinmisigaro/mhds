@@ -88,7 +88,10 @@ class StockController extends Controller
             //
         }
 
-        if(!StockBatch::where('quantity', '>', 0)->exists()){
+        if(!StockBatch::where([
+            ['quantity', '>', 0],
+            ['stock_id','='. $request->id]
+        ])->exists()){
 
             StockBatch::create([
                 'batch_number' => $request->batch,

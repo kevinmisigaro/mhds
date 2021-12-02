@@ -7,6 +7,7 @@ use App\Models\PrescriptionDetails;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Prescription;
 use App\Models\Delivery;
+use App\Models\StockBatch;
 
 class PrescriptionController extends Controller
 {
@@ -42,7 +43,7 @@ class PrescriptionController extends Controller
     }
 
     public function dispatchPrescription($id){
-        Delivery::where('prescription_id', $id)->update([
+        Delivery::where('id', $id)->update([
             'dispatched_by_sp' => true
         ]);
 
@@ -52,7 +53,7 @@ class PrescriptionController extends Controller
     }
 
     public function invoice($id){
-        Delivery::where('prescription_id', $id)->update([
+        Delivery::where('id', $id)->update([
             'invoice_generated' => true
         ]);
 
@@ -64,7 +65,7 @@ class PrescriptionController extends Controller
     }
 
     public function deliveryAcceptance($id){
-        Delivery::where('prescription_id', $id)->update([
+        Delivery::where('id', $id)->update([
             'customer_delivery_accept' => true
         ]);
 
@@ -74,7 +75,7 @@ class PrescriptionController extends Controller
     }
 
     public function processPayment($id){
-        Delivery::where('prescription_id', $id)->update([
+        Delivery::where('id', $id)->update([
             'insurer_process_payment' => true
         ]);
 
@@ -84,11 +85,32 @@ class PrescriptionController extends Controller
     }
 
     public function confirmPayment($id){
-        Delivery::where('prescription_id', $id)->update([
+        Delivery::where('id', $id)->update([
             'sp_confirm_payment' => true
         ]);
 
         session()->flash('message', 'Payment confirmed');
+
+        return \redirect()->back();
+    }
+
+    public function editPrescriptionDrug(Request $request){
+        $details = PrescriptionDetails::where('id', $request->id)->with('drug')->first();
+
+        $batch = StockBatch::where('stock_id', $details->drug->id)->first();
+
+        $batch->update([
+            'quantity' => $batch->quantity + $details->quantity
+        ]);
+        
+        $details->update([
+            'selling_price' =>$request->price,
+            'quantity' => $request->quantity
+        ]);
+
+        $batch->update([
+            'quantity' => $batch->quantity - $request->quantity
+        ]);
 
         return \redirect()->back();
     }

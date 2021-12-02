@@ -21,11 +21,14 @@ class PrescriptionDetails extends Component
     public $price;
     public $quantity;
     public $comment;
+
+    public $prescriptionDetails;
     
 
     public function mount($id){
         $this->prescription = Prescription::where('id', $id)->with(['patient','card'])->first();
         $this->stock = Stock::has('batches')->get();
+        $this->prescriptionDetails =  Details::where('prescription_id', $id)->with('drug')->get();
     }
 
     protected $rules = [
@@ -43,6 +46,22 @@ class PrescriptionDetails extends Component
         $batch = StockBatch::where('stock_id', $value->id)->orderBy('created_at', 'desc')->first();
 
         $this->price = $batch->purchase_price * $margin;
+    }
+
+    public function deleteDrug($id){
+        //get prescription details of specific drug
+        $details = Details::where('id', $id)->with('drug')->first();
+
+        //get batch id
+        $batch = StockBatch::where('stock_id', $details->drug->id)->first();
+
+        //return quantity of batch
+        $batch->update([
+            'quantity' => $batch->quantity + $details->quantity
+        ]);
+
+        //delete drug from prescription
+        $details->delete();
     }
 
     public function submit()
