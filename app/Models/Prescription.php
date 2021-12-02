@@ -27,7 +27,7 @@ class Prescription extends Model
     }
 
     public function company(){
-        
+        return $this->belongsTo(InsuranceCompany::class,'company_id','id');
     }
 
     public function deliveries(){

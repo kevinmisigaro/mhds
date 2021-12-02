@@ -33,7 +33,7 @@
                 </a>
                 <br><br>
               @endif
-              <small><b>Next step:</b> Service provider to generate invoice to insurer</small>
+              <small><b>Next step:</b> Customer to accept recieving drugs</small>
             </div>
           </div>
         @endif
@@ -101,7 +101,7 @@
                       <td colspan="4">
                         <b>TOTAL:</b>
                       </td>
-                      <td>
+                      <td class="bg-success text-white">
                         <b>{{ $tracking->prescription->details->sum('total_price') }}</b>
                       </td>
                     </tr>
@@ -112,43 +112,48 @@
           </div>
         </div>
 
-
-        @if( isset($tracking) && $tracking->dispatched_by_sp )
+        @if (isset($tracking) && $tracking->dispatched_by_sp )
         <div class="card shadow mb-4">
-            <div class="card-body">
-              Prescription dispatched by Service provider
-              <br><br>
-              @if (\Illuminate\Support\Facades\Auth::user()->role == 'admin' && !$tracking->invoice_generated)
-                <a href="/prescription/invoice/{{ $tracking->id }}" class="btn btn-primary">
-                    Generate invoice to insurer
+          <div class="card-body">
+            Customer recieved drugs
+            <br><br>
+            @if (\Illuminate\Support\Facades\Auth::user()->role == 'customer' && !$tracking->customer_delivery_accept)
+                <a href="/prescription/customerAccept/{{ $tracking->id }}" class="btn btn-primary">
+                    Customer confirm drug delivery
                 </a>
                 <br><br>
               @endif
-              <small><b>Next step:</b> Customer to accept recieving drugs</small>
+            <small><b>Next step:</b> Generate invoice for insurer </small>
+          </div>
+        </div>
+        @endif
+
+        @if( isset($tracking) && $tracking->customer_delivery_accept)
+        <div class="card shadow mb-4">
+            <div class="card-body">
+              Customer has drugs from prescription
+              <div class="my-3">
+                @if (\Illuminate\Support\Facades\Auth::user()->role == 'admin' && !$tracking->invoice_generated)
+                <a href="/prescription/invoice/{{ $tracking->id }}" class="btn btn-primary mr-3">
+                    Prepare invoice for insurer
+                </a>
+              @endif
+
+              <a href="/prescription/printInvoice/{{ $tracking->id }}" class="btn btn-info">
+                Print invoice
+              </a>
+
+              </div>
+              <small><b>Next step:</b> Insurer process payment</small>
             </div>
           </div>
         @endif
+
 
         @if (isset($tracking) && $tracking->invoice_generated)
         <div class="card shadow mb-4">
             <div class="card-body">
-              Invoice generated to Insurer
-              <br><br>
-              @if (\Illuminate\Support\Facades\Auth::user()->role == 'customer' && !$tracking->customer_delivery_accept)
-                <a href="/prescription/customerAccept/{{ $tracking->id }}" class="btn btn-primary">
-                    Customer recieved drugs
-                </a>
-                <br><br>
-              @endif
-              <small><b>Next step:</b> Insurer to process payment</small>
-            </div>
-          </div>
-        @endif
-
-        @if (isset($tracking) && $tracking->customer_delivery_accept)
-        <div class="card shadow mb-4">
-            <div class="card-body">
-              Customer recieved prescription
+              Insurer get invoice and waiting to process payment
               <br><br>
               @if (\Illuminate\Support\Facades\Auth::user()->role == 'insurer' && !$tracking->insurer_process_payment)
                 <a href="/prescription/processPayment/{{ $tracking->id }}" class="btn btn-primary">

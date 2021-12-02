@@ -58,66 +58,66 @@ Customers
                             @endif
                         </td>
                         <td>
-
                             <a type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">
-                            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a href="#" data-toggle="modal" data-target="#customerDetailsModal{{ $card->owner->id }}"
-                                class="dropdown-item">Customer details</a>
-                        </div>
-
+                                aria-expanded="false">
+                                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="/dashboard/admin/customer/{{ $card->owner->id }}">
+                                    View cards</a>
+                                <a href="#" data-toggle="modal"
+                                    data-target="#customerDetailsModal{{ $card->owner->id }}"
+                                    class="dropdown-item">Customer details</a>
+                            </div>
                         </td>
 
-
-                    <!-- Modal -->
-                    <div class="modal fade" id="customerDetailsModal{{ $card->owner->id }}" tabindex="-1"
-                        aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">
-                                        {{ $card->owner->name }} details
-                                    </h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-
-                                    <div class="row">
-                                        <div class="col-md-6 mb-3">
-                                            <label for="">Name</label>
-                                            <input type="text" disabled value="{{ $card->owner->name }}"
-                                                class="form-control">
-                                        </div>
-                                        <div class="col-md-6 mb-3">
-                                            <label for="">Email</label>
-                                            <input type="text" disabled value="{{ $card->owner->email }}"
-                                                class="form-control">
-                                        </div>
-                                        <div class="col-md-6 mb-3">
-                                            <label for="">Phone</label>
-                                            <input type="text" disabled value="{{ $card->owner->phone }}"
-                                                class="form-control">
-                                        </div>
-                                        <div class="col-md-6 mb-3">
-                                            <label for="">Gender</label>
-                                            <input type="text" disabled value="{{ $card->owner->customer->sex }}"
-                                                class="form-control">
-                                        </div>
-                                        <div class="col-md-6 mb-3">
-                                            <label for="">Date of birth</label>
-                                            <input type="text" disabled value="{{ $card->owner->customer->dob }}"
-                                                class="form-control">
-                                        </div>
+                        <!-- Modal -->
+                        <div class="modal fade" id="customerDetailsModal{{ $card->owner->id }}" tabindex="-1"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">
+                                            {{ $card->owner->name }} details
+                                        </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
                                     </div>
+                                    <div class="modal-body">
 
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="">Name</label>
+                                                <input type="text" disabled value="{{ $card->owner->name }}"
+                                                    class="form-control">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="">Email</label>
+                                                <input type="text" disabled value="{{ $card->owner->email }}"
+                                                    class="form-control">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="">Phone</label>
+                                                <input type="text" disabled value="{{ $card->owner->phone }}"
+                                                    class="form-control">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="">Gender</label>
+                                                <input type="text" disabled value="{{ $card->owner->customer->sex }}"
+                                                    class="form-control">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="">Date of birth</label>
+                                                <input type="text" disabled value="{{ $card->owner->customer->dob }}"
+                                                    class="form-control">
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
                     </tr>
                     @endforeach

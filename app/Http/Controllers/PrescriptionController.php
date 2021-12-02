@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Prescription;
 use App\Models\Delivery;
 use App\Models\StockBatch;
+use LaravelDaily\Invoices\Invoice;
+use LaravelDaily\Invoices\Classes\Party;
+use LaravelDaily\Invoices\Classes\InvoiceItem;
 
 class PrescriptionController extends Controller
 {
@@ -52,12 +55,44 @@ class PrescriptionController extends Controller
         return \redirect()->back();
     }
 
-    public function invoice($id){
-        Delivery::where('id', $id)->update([
-            'invoice_generated' => true
+    public function printInvoice($id){
+        $deliveryTracking = Delivery::where('id', $id)->with('prescription')->first();
+
+        //start generating invoice
+        $client = new Party([
+            'name' => $deliveryTracking->prescription->company->manager->name,
+            'email' => $deliveryTracking->prescription->company->manager->email
         ]);
 
-        //generate invoice code
+        $customer = new Party([
+            'name' => env('APP_NAME'),
+            'email' => 'info@gusa.co.tz'
+        ]);
+
+        $items = [];
+
+        foreach ($deliveryTracking->prescription->details as $detail) {
+           array_push($items, ( new InvoiceItem())
+                                    ->title($detail->drug->generic_name) 
+                                    ->pricePerUnit($detail->selling_price)
+                                    ->quantity($detail->quantity)
+                                );
+        }
+
+        $invoice = Invoice::make('reciept')->seller($customer)->buyer($client)
+                        ->date(now())->dateFormat('d/m/Y')->payUntilDays(14)
+                        ->currencySymbol('TZS')->currencyCode('TZS')
+                        ->currencyFormat('{VALUE}{SYMBOL}')->currencyThousandsSeparator('.')
+                        ->currencyDecimalPoint(',')->filename($client->name . ' invoice from ' . $customer->name)
+                        ->addItems($items);
+
+        return $invoice->download();
+    }
+
+    public function invoice($id){
+        Delivery::where('id', $id)->with('prescription')->update([
+            'invoice_generated' => true
+        ]);
 
         session()->flash('message', 'Invoice generated');
 

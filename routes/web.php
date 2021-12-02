@@ -50,6 +50,7 @@ Route::middleware('auth')->group(function () {
         Route::get('customerAccept/{id}', [PrescriptionController::class, 'deliveryAcceptance']);
         Route::get('processPayment/{id}', [PrescriptionController::class, 'processPayment']);
         Route::get('confirmPayment/{id}',[PrescriptionController::class,'confirmPayment']);
+        Route::get('printInvoice/{id}',[PrescriptionController::class,'printInvoice']);
 
         Route::post('updateDrugDetails',[PrescriptionController::class,'editPrescriptionDrug']);
         
