@@ -13,6 +13,12 @@ class PrescriptionDetails extends Model
 
     protected $fillable = ['quantity','selling_price'];
 
+    protected $appends = ['total_price'];
+
+    public function getTotalPriceAttribute(){
+        return $this->quantity * $this->selling_price;
+    }
+
     public function prescription(){
         return $this->belongsTo(Prescription::class,'prescription_id','id');
     }

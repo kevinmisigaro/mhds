@@ -19,8 +19,11 @@
               Insurer approved.
               <br><br>
 
-              <button class="btn btn-info">
+              <button class="btn btn-info" data-toggle="modal" data-target="#viewPrescriptionModal">
                 View Prescription
+              </button>
+              <button class="btn btn-info ml-2" data-toggle="modal" data-target="#viewOirignalPrescriptionModal">
+                View Original Prescription
               </button>
               <br><br>
 
@@ -34,6 +37,81 @@
             </div>
           </div>
         @endif
+
+        <!-- Original prescription Modal -->
+        <div class="modal fade" id="viewOirignalPrescriptionModal" tabindex="-1" aria-labelledby="viewOirignalPrescriptionModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Original prescription</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body text-center">
+                  <img src="{{ env('APP_URL') }}{{ $tracking->prescription->image }}" alt="..." style="max-height: 500px">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- View prescription Modal -->
+        <div class="modal fade" id="viewPrescriptionModal" tabindex="-1" aria-labelledby="viewPrescriptionModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Prescription</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Drug</th>
+                      <th scope="col">Strength</th>
+                      <th scope="col">Quantity</th>
+                      <th scope="col">Price</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach ($tracking->prescription->details as $item)
+
+                        <tr>
+                          <td>
+                            {{ $loop->iteration }}
+                          </td>
+                          <td>
+                            {{ $item->drug->generic_name }}
+                          </td>
+                          <td>
+                            {{ $item->drug->strength }}
+                          </td>
+                          <td>
+                            {{ $item->quantity }}
+                          </td>
+                          <td>
+                            {{ $item->quantity * $item->selling_price }}
+                          </td>
+                        </tr>
+                    @endforeach
+                    <tr>
+                      <td colspan="4">
+                        <b>TOTAL:</b>
+                      </td>
+                      <td>
+                        <b>{{ $tracking->prescription->details->sum('total_price') }}</b>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
 
         @if( isset($tracking) && $tracking->dispatched_by_sp )
         <div class="card shadow mb-4">
