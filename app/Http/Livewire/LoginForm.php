@@ -22,18 +22,23 @@ class LoginForm extends Component
         if (Auth::attempt(['email' => $this->email, 'password' => $this->password])) {
 
             //head to customer dashboard
-            if (Auth::user()->role == 'customer') {
+            if (Auth::user()->role == 2) {
                 return redirect('/dashboard/customer/home');
             }
 
             //head to admin dashboard
-            if(Auth::user()->role == 'admin'){
+            if(Auth::user()->role == 1){
                 return redirect('/dashboard/admin/home');
             }
 
             //head to insurer dashboard
-            if(Auth::user()->role == 'insurer'){
+            if(Auth::user()->role == 3){
                 return \redirect('/dashboard/insurer/home');
+            }
+
+            //head to pharmacist dashboard
+            if(Auth::user()->role == 5){
+                return redirect('/dashboard/admin/home');
             }
         }
 

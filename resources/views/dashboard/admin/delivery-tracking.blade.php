@@ -27,7 +27,7 @@
               </button>
               <br><br>
 
-              @if (\Illuminate\Support\Facades\Auth::user()->role == 'admin'  && !$tracking->dispatched_by_sp)
+              @if (\Illuminate\Support\Facades\Auth::user()->role == 1  && !$tracking->dispatched_by_sp)
                 <a href="/prescription/dispatch/{{ $tracking->id }}" class="btn btn-primary">
                     Dispatch order
                 </a>
@@ -117,7 +117,7 @@
           <div class="card-body">
             Customer recieved drugs
             <br><br>
-            @if (\Illuminate\Support\Facades\Auth::user()->role == 'customer' && !$tracking->customer_delivery_accept)
+            @if (\Illuminate\Support\Facades\Auth::user()->role == 2 && !$tracking->customer_delivery_accept)
                 <a href="/prescription/customerAccept/{{ $tracking->id }}" class="btn btn-primary">
                     Customer confirm drug delivery
                 </a>
@@ -133,7 +133,7 @@
             <div class="card-body">
               Customer has drugs from prescription
               <div class="my-3">
-                @if (\Illuminate\Support\Facades\Auth::user()->role == 'admin' && !$tracking->invoice_generated)
+                @if (\Illuminate\Support\Facades\Auth::user()->role == 1 && !$tracking->invoice_generated)
                 <a href="/prescription/invoice/{{ $tracking->id }}" class="btn btn-primary mr-3">
                     Prepare invoice for insurer
                 </a>
@@ -155,7 +155,7 @@
             <div class="card-body">
               Insurer get invoice and waiting to process payment
               <br><br>
-              @if (\Illuminate\Support\Facades\Auth::user()->role == 'insurer' && !$tracking->insurer_process_payment)
+              @if (\Illuminate\Support\Facades\Auth::user()->role == 3 && !$tracking->insurer_process_payment)
                 <a href="/prescription/processPayment/{{ $tracking->id }}" class="btn btn-primary">
                     Process payment
                 </a>
@@ -171,7 +171,7 @@
             <div class="card-body">
               Insurer processing payment.
               <br><br>
-              @if (\Illuminate\Support\Facades\Auth::user()->role == 'admin' && !$tracking->sp_confirm_payment)
+              @if (\Illuminate\Support\Facades\Auth::user()->role == 1 && !$tracking->sp_confirm_payment)
                 <a href="/prescription/confirmPayment/{{ $tracking->id }}" class="btn btn-primary">
                     Confirm payment
                 </a>

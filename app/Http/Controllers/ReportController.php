@@ -14,7 +14,7 @@ class ReportController extends Controller
 {
     public function admin(){
          
-        $users = User::where('role', '<>', 'admin')->whereMonth('created_at', date('m'))->whereYear('created_at', date('Y'))->get();
+        $users = User::where('role', '<>', 1)->whereMonth('created_at', date('m'))->whereYear('created_at', date('Y'))->get();
         $prescriptions = Prescription::whereMonth('created_at', date('m'))->whereYear('created_at', date('Y'))->get();
         $complaints = Complaint::whereMonth('created_at', date('m'))->whereYear('created_at', date('Y'))->get();
         $drugs = Stock::whereMonth('created_at', date('m'))->whereYear('created_at', date('Y'))->get();

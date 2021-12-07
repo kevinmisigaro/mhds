@@ -39,7 +39,7 @@ class AuthController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make('123456'),
-                'role' => 'insurer'
+                'role' => 3
             ]);
 
             $company = InsuranceCompany::create([
@@ -91,7 +91,7 @@ class AuthController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make('123456'),
-                'role' => 'customer',
+                'role' => 2,
                 'phone' => $request->phone
             ]);
 
@@ -159,7 +159,7 @@ class AuthController extends Controller
             $user->name = $request->name;
             $user->email = $request->email;
             $user->password = Hash::make($request->pass);
-            $user->role = 'insurer';
+            $user->role = 3;
             $user->save();
 
             $company = new InsuranceCompany;

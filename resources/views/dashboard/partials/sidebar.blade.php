@@ -1,7 +1,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
 
-    @if (\Illuminate\Support\Facades\Auth::user()->role == 'customer')
+    @if (\Illuminate\Support\Facades\Auth::user()->role == 2)
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/dashboard/customer/home">
         <div class="sidebar-brand-text mx-3">
@@ -45,7 +45,7 @@
 
 
 
-    @if (\Illuminate\Support\Facades\Auth::user()->role == 'admin')
+    @if (\Illuminate\Support\Facades\Auth::user()->role == 1)
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/dashboard/admin/home">
         <div class="sidebar-brand-text mx-3">
@@ -114,7 +114,7 @@
 
 
 
-    @if (\Illuminate\Support\Facades\Auth::user()->role == 'insurer')
+    @if (\Illuminate\Support\Facades\Auth::user()->role == 3)
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/dashboard/insurer/home">
         <div class="sidebar-brand-text mx-3">
             {{ env('APP_NAME') }}
@@ -152,6 +152,21 @@
         <a class="nav-link" href="/dashboard/insurer/reports">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Reports</span></a>
+    </li>
+    @endif
+
+    @if (\Illuminate\Support\Facades\Auth::user()->role == 5)
+        
+    <li class="nav-item">
+        <a class="nav-link" href="/dashboard/admin/prescriptions">
+            <i class="far fa-fw fa-list-alt"></i>
+            <span>Prescriptions</span></a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="/dashboard/admin/stock">
+            <i class="far fa-fw fa-comment"></i>
+            <span>Stock</span></a>
     </li>
     @endif
 

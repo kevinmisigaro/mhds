@@ -58,17 +58,8 @@
                         </button>
                     </td>
                 </tr>
-                @endforeach
-                @else
-                <tr>
-                    <td colspan="5" class="text-center">No prescriptions</td>
-                </tr>
-                @endif
 
-            </tbody>
-        </table>
-
-        <!-- edit drug Modal -->
+                        <!-- edit drug Modal -->
 <div class="modal fade" id="editDrugModal{{ $item->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -105,8 +96,20 @@
     </div>
   </div>
 
+                @endforeach
+                @else
+                <tr>
+                    <td colspan="5" class="text-center">No prescriptions</td>
+                </tr>
+                @endif
+
+            </tbody>
+        </table>
+
+
+
         @if (!$prescription->approved_by_insurer)
-        @if (\Illuminate\Support\Facades\Auth::user()->role == 'insurer')
+        @if (\Illuminate\Support\Facades\Auth::user()->role == 3)
         <div class="my-3">
             <button class="btn btn-info ml-2" data-toggle="modal" data-target="#approve" style="margin-top: 32px">
                 Approve
@@ -171,7 +174,7 @@
         </div>
         @endif
 
-        @if (\Illuminate\Support\Facades\Auth::user()->role == 'admin')
+        @if (\Illuminate\Support\Facades\Auth::user()->role == 1)
         <div class="my-3">
             <form wire:submit.prevent="submit">
                 <div class="row">

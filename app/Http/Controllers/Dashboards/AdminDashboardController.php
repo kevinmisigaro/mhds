@@ -15,9 +15,9 @@ use App\Models\InsuranceCard;
 class AdminDashboardController extends Controller
 {
     public function index(){
-        $customers = User::where('role','customer')->get();
-        $insurers = User::where('role','insurer')->get();
-        $doctors = User::where('role','doctor')->get();
+        $customers = User::where('role',2)->get();
+        $insurers = User::where('role',3)->get();
+        $doctors = User::where('role',4)->get();
         $prescriptions = Prescription::get();
         $companies = InsuranceCompany::get();
         $complaints = Complaint::get();
@@ -26,7 +26,7 @@ class AdminDashboardController extends Controller
     }
 
     public function getCustomers(){
-        $customers = User::where('role','customer')->with('customer')->get();
+        $customers = User::where('role',2)->with('customer')->get();
         $companies = InsuranceCompany::get();
         return view('dashboard.admin.customers',\compact('customers','companies'));
     }
@@ -42,12 +42,12 @@ class AdminDashboardController extends Controller
     }
 
     public function getInsurers(){
-        $insurers = User::where('role','insurer')->with('insuranceCompanyManaged')->get();
+        $insurers = User::where('role',3)->with('insuranceCompanyManaged')->get();
         return view('dashboard.admin.insurers',\compact('insurers'));
     }
 
     public function getDoctors(){
-        $doctors = User::where('role','doctor')->get();
+        $doctors = User::where('role',4)->get();
         return view('dashboard.admin.doctors',\compact('doctors'));
     }
 

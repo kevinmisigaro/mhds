@@ -28,7 +28,7 @@ class UserSeeder extends Seeder
             'name' => 'admin',
             'email' => 'admin@admin.com',
             'password' => Hash::make('123456'),
-            'role' => 'admin',
+            'role' => 1,
         ]);
 
         //INSURER #1
@@ -36,7 +36,7 @@ class UserSeeder extends Seeder
             'name' => 'Micheal Edwards',
             'email' => 'edwards@gmail.com',
             'password' => Hash::make('123456'),
-            'role' => 'insurer',
+            'role' => 3,
         ]);
 
         //INSURER #2
@@ -44,7 +44,7 @@ class UserSeeder extends Seeder
             'name' => 'Ole Gunnar',
             'email' => 'ole@gmail.com',
             'password' => Hash::make('123456'),
-            'role' => 'insurer',
+            'role' => 3,
         ]);
 
         //DOCTOR
@@ -52,7 +52,15 @@ class UserSeeder extends Seeder
             'name' => 'Caleb Abel',
             'email' => 'abel@gmail.com',
             'password' => Hash::make('123456'),
-            'role' => 'doctor',
+            'role' => 4,
+        ]);
+
+        //FINANCE
+        User::create([
+            'name' => 'Alexis Sanchez',
+            'email' => 'alexis@gmail.com',
+            'password' => Hash::make('123456'),
+            'role' => 5,
         ]);
     }
 
