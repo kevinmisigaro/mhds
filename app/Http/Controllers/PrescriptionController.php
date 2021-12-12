@@ -79,12 +79,21 @@ class PrescriptionController extends Controller
                                 );
         }
 
-        $invoice = Invoice::make('reciept')->seller($customer)->buyer($client)
-                        ->date(now())->dateFormat('d/m/Y')->payUntilDays(14)
+        $notes = [
+            'Payment Info:',
+            'Exim Bank T Ltd',
+            'Account Number: 0320002470',
+            'Account Name: Melian Software Company Limited'
+        ];
+        $notes = implode("<br>", $notes);
+
+
+        $invoice = Invoice::make('invoice')->seller($customer)->buyer($client)
+                        ->date(now())->dateFormat('d/m/Y')->payUntilDays(15)
                         ->currencySymbol('TZS')->currencyCode('TZS')
                         ->currencyFormat('{VALUE}{SYMBOL}')->currencyThousandsSeparator('.')
                         ->currencyDecimalPoint(',')->filename($client->name . ' invoice from ' . $customer->name)
-                        ->addItems($items);
+                        ->addItems($items)->notes($notes);
 
         return $invoice->download();
     }
