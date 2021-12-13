@@ -55,13 +55,15 @@ class UserSeeder extends Seeder
             'role' => 4,
         ]);
 
-        //FINANCE
+        //PHARMACIST
         User::create([
             'name' => 'Alexis Sanchez',
             'email' => 'alexis@gmail.com',
             'password' => Hash::make('123456'),
             'role' => 5,
         ]);
+
+
     }
 
 }

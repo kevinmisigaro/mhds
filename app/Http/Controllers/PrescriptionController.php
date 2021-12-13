@@ -81,7 +81,7 @@ class PrescriptionController extends Controller
 
         $notes = [
             'Payment Info:',
-            'Exim Bank T Ltd',
+            'Exim Bank (T) Ltd',
             'Account Number: 0320002470',
             'Account Name: Melian Software Company Limited'
         ];
